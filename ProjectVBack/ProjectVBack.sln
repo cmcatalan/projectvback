@@ -13,21 +13,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infrastructure Layer", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Domain Layer", "3. Domain Layer", "{62E81F23-5857-4B34-BCB6-BAD699C84630}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Application.Services", "..\ProjectVBack.Application.Services\ProjectVBack.Application.Services.csproj", "{6ADF0A18-05DB-4170-95C5-B7257D9A1FF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Application.Services", "..\ProjectVBack.Application.Services\ProjectVBack.Application.Services.csproj", "{6ADF0A18-05DB-4170-95C5-B7257D9A1FF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Domain.Entities", "..\ProjectVBack.Domain.Entities\ProjectVBack.Domain.Entities.csproj", "{14A778CE-F579-492B-86DF-4DEDDC7D04C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Domain.Entities", "..\ProjectVBack.Domain.Entities\ProjectVBack.Domain.Entities.csproj", "{14A778CE-F579-492B-86DF-4DEDDC7D04C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Crosscutting layer", "5. Crosscutting layer", "{D958DDA5-DFEE-4738-AB15-C069C3033577}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Testing", "6. Testing", "{2CD2B82B-06E8-4985-B814-4478D487692C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Infrastructure.DataModels", "..\ProjectVBack.Infrastructure.DataModels\ProjectVBack.Infrastructure.DataModels.csproj", "{22EC118E-5D13-4E7D-B73E-A468D3B4E6AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Infrastructure.DataModels", "..\ProjectVBack.Infrastructure.DataModels\ProjectVBack.Infrastructure.DataModels.csproj", "{22EC118E-5D13-4E7D-B73E-A468D3B4E6AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Infrastructure.Repositories", "..\ProjectVBack.Infrastructure.Repositories\ProjectVBack.Infrastructure.Repositories.csproj", "{81E3B28C-8F8A-464B-9FD4-700CE48CD210}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Infrastructure.Repositories", "..\ProjectVBack.Infrastructure.Repositories\ProjectVBack.Infrastructure.Repositories.csproj", "{81E3B28C-8F8A-464B-9FD4-700CE48CD210}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Crosscutting.Utils", "..\ProjectVBack.Crosscutting.Utils\ProjectVBack.Crosscutting.Utils.csproj", "{3627FD2C-0A6C-4397-B3C2-F95A6586D3C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Crosscutting.Utils", "..\ProjectVBack.Crosscutting.Utils\ProjectVBack.Crosscutting.Utils.csproj", "{3627FD2C-0A6C-4397-B3C2-F95A6586D3C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Testing.UnitTesting", "..\ProjectVBack.Testing.UnitTesting\ProjectVBack.Testing.UnitTesting.csproj", "{ABD18B86-8028-4499-9DC2-46C23B2A0D24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Testing.UnitTesting", "..\ProjectVBack.Testing.UnitTesting\ProjectVBack.Testing.UnitTesting.csproj", "{ABD18B86-8028-4499-9DC2-46C23B2A0D24}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Infrastructure.Persistence", "..\ProjectVBack.Infrastructure.Persistence\ProjectVBack.Infrastructure.Persistence.csproj", "{95B9A75E-C386-43F2-AEEF-085665FB19CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Application.Dtos", "..\ProjectVBack.Application.Dtos\ProjectVBack.Application.Dtos.csproj", "{362D5580-6A80-403C-AABD-4DB8D9D4B575}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{ABD18B86-8028-4499-9DC2-46C23B2A0D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABD18B86-8028-4499-9DC2-46C23B2A0D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABD18B86-8028-4499-9DC2-46C23B2A0D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95B9A75E-C386-43F2-AEEF-085665FB19CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95B9A75E-C386-43F2-AEEF-085665FB19CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95B9A75E-C386-43F2-AEEF-085665FB19CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95B9A75E-C386-43F2-AEEF-085665FB19CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{362D5580-6A80-403C-AABD-4DB8D9D4B575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{362D5580-6A80-403C-AABD-4DB8D9D4B575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{362D5580-6A80-403C-AABD-4DB8D9D4B575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{362D5580-6A80-403C-AABD-4DB8D9D4B575}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +87,8 @@ Global
 		{81E3B28C-8F8A-464B-9FD4-700CE48CD210} = {148A3964-0719-4D21-B070-1E1DE5A9426B}
 		{3627FD2C-0A6C-4397-B3C2-F95A6586D3C0} = {D958DDA5-DFEE-4738-AB15-C069C3033577}
 		{ABD18B86-8028-4499-9DC2-46C23B2A0D24} = {2CD2B82B-06E8-4985-B814-4478D487692C}
+		{95B9A75E-C386-43F2-AEEF-085665FB19CD} = {148A3964-0719-4D21-B070-1E1DE5A9426B}
+		{362D5580-6A80-403C-AABD-4DB8D9D4B575} = {153CBBF2-77FE-4466-B829-6A85BFC0F54B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {274B9532-7539-48BD-B2F8-FE5EF322C5EC}
