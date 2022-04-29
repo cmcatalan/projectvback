@@ -57,7 +57,7 @@ namespace ProjectVBack.WebApi.Services.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetMe( )
+        public async Task<IActionResult> GetMe()
         {
             try
             {

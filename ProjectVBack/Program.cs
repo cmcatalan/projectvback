@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
+using ProjectVBack.Application.Services;
 using ProjectVBack.Application.Services.Configuration;
 using System.Text;
 
@@ -8,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDependency(builder.Configuration);
-
+builder.Services.AddTransient<IUserAppService, UserAppService>();
 builder.Services
     .AddHttpContextAccessor()
     .AddAuthorization()
@@ -30,7 +32,27 @@ builder.Services
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+var scheme = new OpenApiSecurityScheme
+{
+    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+    Name = "Authorization",
+    In = ParameterLocation.Header,
+    Type = SecuritySchemeType.ApiKey,
+    Reference = new OpenApiReference
+    {
+        Type = ReferenceType.SecurityScheme,
+        Id = "Bearer"
+    }
+};
+
+builder.Services.AddSwaggerGen(o =>
+{
+    o.AddSecurityDefinition("Bearer", scheme);
+    o.AddSecurityRequirement(new OpenApiSecurityRequirement() { { scheme, new string[] { } } });
+});
+
+
 
 var app = builder.Build();
 

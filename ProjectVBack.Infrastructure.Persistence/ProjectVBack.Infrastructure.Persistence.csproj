@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectVBack.Infrastructure.DataModels\ProjectVBack.Infrastructure.DataModels.csproj" />
+    <ProjectReference Include="..\ProjectVBack.Domain.Entities\ProjectVBack.Domain.Entities.csproj" />
   </ItemGroup>
 
 </Project>

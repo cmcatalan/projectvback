@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ProjectVBack.Domain.Entities;
 using ProjectVBack.Infrastructure.Persistence;
 
 namespace ProjectVBack.Application.Services.Configuration
