@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectVBack.Domain.Entities\ProjectVBack.Domain.Entities.csproj" />
-    <ProjectReference Include="..\ProjectVBack.Domain.Repositories.Abstractions\ProjectVBack.Domain.Repositories.Abstractions.csproj" />
-    <ProjectReference Include="..\ProjectVBack.Infrastructure.Persistence\ProjectVBack.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

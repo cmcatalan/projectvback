@@ -2,12 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ProjectVBack.Application.Dtos;
-using ProjectVBack.Infrastructure.Persistence;
+using ProjectVBack.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ProjectVBack.Application.Services.Implementations
+namespace ProjectVBack.Application.Services
 {
     public class UserAppService : IUserAppService
     {
