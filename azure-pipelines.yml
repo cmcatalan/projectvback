@@ -1,0 +1,27 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- develop
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+    sudo snap install --classic heroku
+  displayName: 'i heroku cli'
+
+- script: |
+    echo CONTAINER LOGIN
+    heroku container:login
+    echo PUSH
+    heroku container:push -a $HEROKU_APP_NAME web
+    echo RELEASE
+    heroku container:release -a $HEROKU_APP_NAME web
+  displayName: 'heroku push'
+  env:
+    HEROKU_API_KEY: $(HEROKU_API_KEY)
+    HEROKU_APP_NAME: $(HEROKU_APP_NAME)
