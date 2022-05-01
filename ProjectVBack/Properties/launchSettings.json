@@ -9,12 +9,32 @@
     }
   },
   "profiles": {
-    "ProjectVBack": {
+    "ProjectVBack-Development": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7162;http://localhost:5162",
+      "dotnetRunMessages": true
+    },
+    "ProjectVBack-Staging": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Staging"
+      },
+      "applicationUrl": "https://localhost:7162;http://localhost:5162",
+      "dotnetRunMessages": true
+    },
+    "ProjectVBack-Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       },
       "applicationUrl": "https://localhost:7162;http://localhost:5162",
       "dotnetRunMessages": true
