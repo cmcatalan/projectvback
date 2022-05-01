@@ -14,7 +14,7 @@ namespace ProjectVBack.Application.Services.Configuration
         public static IServiceCollection AddDependency(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration["ConnectionString:DefaultConnection"];
-            var mySqlServerVersion = new MySqlServerVersion(new Version(8, 0, 28));
+            var mySqlServerVersion = new MySqlServerVersion(new Version(8, 0, 23));
 
             //services.AddAutoMapper(typeof(AppProfile));
 
