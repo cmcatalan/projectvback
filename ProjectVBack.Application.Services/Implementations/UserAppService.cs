@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ProjectVBack.Application.Dtos;
+using ProjectVBack.Application.Dtos.UserService;
 using ProjectVBack.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -65,6 +66,24 @@ namespace ProjectVBack.Application.Services
             var result = await _userManager.CreateAsync(newUser, request.Password);
             
             return result.Succeeded;
+        }
+
+        public async Task<UserDto> GetUserInfoAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null) //Add custom ex user not found
+                return null;
+
+            UserDto userDto = new UserDto()
+            {
+                FirstName = user.FirstName,
+                LastName= user.LastName,
+                Email = user.Email,
+                UserName = user.UserName,
+            };
+
+            return userDto;
         }
     }
 }

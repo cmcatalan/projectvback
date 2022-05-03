@@ -56,7 +56,7 @@ namespace ProjectVBack.WebApi.Services.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetMe()
         {
             try
