@@ -2,5 +2,6 @@
 {
     public interface ICategoryAppService
     {
+        Task<bool> CreateCategoryAsync();
     }
 }
