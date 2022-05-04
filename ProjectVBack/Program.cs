@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using ProjectVBack.Application.Services;
 using ProjectVBack.Application.Services.Configuration;
 using System.Text;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,7 +53,8 @@ builder.Services.AddSwaggerGen(o =>
     o.AddSecurityRequirement(new OpenApiSecurityRequirement() { { scheme, new string[] { } } });
 });
 
-
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).Enrich.FromLogContext().CreateLogger();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
