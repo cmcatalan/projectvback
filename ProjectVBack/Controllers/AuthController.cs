@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectVBack.Application.Dtos;
 using ProjectVBack.Application.Services;
+using ProjectVBack.Crosscutting.CustomExceptions;
+using ProjectVBack.Crosscutting.Utils;
 
 namespace ProjectVBack.WebApi.Services.Controllers
 {
@@ -22,20 +24,9 @@ namespace ProjectVBack.WebApi.Services.Controllers
         [HttpPost]
         public async Task<IActionResult> LogIn(AuthenticateRequest request)
         {
-            try
-            {
-                var jwt = await _userAppService.LogIn(request);
+            var jwt = await _userAppService.LogIn(request);
 
-                if (jwt == null)
-                    return BadRequest();
-
-                return Ok(new { AccessToken = jwt });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Can't log in");
-                return BadRequest();
-            }
+            return Ok(new { AccessToken = jwt });
         }
 
         [HttpPost]
@@ -57,7 +48,7 @@ namespace ProjectVBack.WebApi.Services.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RoleUtils.Admin)]
         public async Task<IActionResult> GetMe()
         {
             try

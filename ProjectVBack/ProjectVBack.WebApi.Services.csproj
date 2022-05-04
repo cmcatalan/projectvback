@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ProjectVBack.Application.Dtos\ProjectVBack.Application.Dtos.csproj" />
     <ProjectReference Include="..\ProjectVBack.Application.Services\ProjectVBack.Application.Services.csproj" />
+    <ProjectReference Include="..\ProjectVBack.Crosscutting.CustomExceptions\ProjectVBack.Crosscutting.CustomExceptions.csproj" />
   </ItemGroup>
 
 </Project>

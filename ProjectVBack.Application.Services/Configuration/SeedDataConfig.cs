@@ -30,15 +30,17 @@ namespace ProjectVBack.Application.Services.Configuration
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            if (!userManager.Users.Any())
+            var haveUsers = userManager.Users.Any();
+
+            if (!haveUsers)
             {
-                var adminRole = "Admin";
-                var userRole = "User";
+                var defaultRoles = new List<string>() {
+                    RoleUtils.Admin,
+                    RoleUtils.User
+                };
 
-                await roleManager.CreateAsync(new IdentityRole { Name = adminRole });
-                await roleManager.CreateAsync(new IdentityRole { Name = userRole });
-
-                var defaultRoles = new List<string>() { adminRole, userRole };
+                foreach (var role in defaultRoles)
+                    await roleManager.CreateAsync(new IdentityRole(role));
 
                 var defaultPassword = "P@ss.W0rd";
 
@@ -73,11 +75,11 @@ namespace ProjectVBack.Application.Services.Configuration
         {
             var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
-            var categories = await unitOfWork.Categories.Get();
+            var haveCategories = unitOfWork.Categories.Query().Any();
 
-            if (!categories.Any())
+            if (!haveCategories)
             {
-                var categoriesToAdd = new List<Category>() {
+                var defaultCategories = new List<Category>() {
                     new Category(){
                         Id = 1,
                         Type= CategoryType.Expense,
@@ -208,7 +210,7 @@ namespace ProjectVBack.Application.Services.Configuration
                     },
                 };
 
-                await unitOfWork.Categories.AddRange(categoriesToAdd);
+                await unitOfWork.Categories.AddRangeAsync(defaultCategories);
 
                 unitOfWork.Complete();
             }

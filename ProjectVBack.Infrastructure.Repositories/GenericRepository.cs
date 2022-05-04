@@ -14,34 +14,39 @@ namespace ProjectVBack.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<TEntity> Add(TEntity itemToAdd)
+        public async Task<TEntity> AddAsync(TEntity itemToAdd)
         {
             var addedItem = await _context.Set<TEntity>().AddAsync(itemToAdd);
 
             return addedItem.Entity;
         }
 
-        public async Task AddRange(IEnumerable<TEntity> itemsToAdd)
+        public async Task AddRangeAsync(IEnumerable<TEntity> itemsToAdd)
         {
             await _context.Set<TEntity>().AddRangeAsync(itemsToAdd);
         }
 
-        public async Task<TEntity> Get(int itemId)
+        public async Task<TEntity?> GetAsync(int itemId)
         {
             return await _context.Set<TEntity>().FindAsync(itemId);
         }
 
-        public async Task<IEnumerable<TEntity>> Get()
+        public async Task<IEnumerable<TEntity>> GetAsync()
         {
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _context.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
-        public async Task<TEntity> Update(TEntity itemToUpdate)
+        public IQueryable<TEntity> Query()
+        {
+            return _context.Set<TEntity>().AsQueryable<TEntity>();
+        }
+
+        public async Task<TEntity?> UpdateAsync(TEntity itemToUpdate)
         {
             var row = await _context.Set<TEntity>().SingleOrDefaultAsync(x => x.Id == itemToUpdate.Id);
 
@@ -54,14 +59,7 @@ namespace ProjectVBack.Infrastructure.Repositories
             return itemToUpdate;
         }
 
-        public async Task<TEntity> HardDelete(TEntity itemToDelete)
-        {
-            var deletedItem = await Task.Run(() => { return _context.Set<TEntity>().Remove(itemToDelete); });
-
-            return deletedItem.Entity;
-        }
-
-        public async Task<TEntity> SoftDelete(TEntity itemToDelete)
+        public async Task<TEntity?> SoftDeleteAsync(TEntity itemToDelete)
         {
             var row = await _context.Set<TEntity>().SingleOrDefaultAsync(x => x.Id == itemToDelete.Id);
 
@@ -73,6 +71,13 @@ namespace ProjectVBack.Infrastructure.Repositories
             _context.Entry(itemToDelete).State = EntityState.Modified;
 
             return row;
+        }
+
+        public TEntity HardDelete(TEntity itemToDelete)
+        {
+            var deletedItem = _context.Set<TEntity>().Remove(itemToDelete);
+
+            return deletedItem.Entity;
         }
     }
 }
