@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVBack.Application.Dtos;
+using ProjectVBack.Application.Dtos.UserService;
 using ProjectVBack.Application.Services;
 using System.Security.Claims;
 
@@ -25,20 +26,9 @@ namespace ProjectVBack.WebApi.Services.Controllers
         {
             try
             {
-                var user = HttpContext.User;
+                var userId = GetUserId();
 
-                if (user == null)
-                    return NotFound();
-
-                var userClaims = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
-
-                if(userClaims == null)
-                    return NotFound();
-
-                if (string.IsNullOrEmpty(userClaims.Value))
-                    return NotFound();
-
-                var userInfo = await _userAppService.GetUserInfoAsync(userClaims.Value);
+                var userInfo = await _userAppService.GetUserInfoAsync(userId);
 
                 if (userInfo == null)
                     return NotFound();
@@ -50,7 +40,45 @@ namespace ProjectVBack.WebApi.Services.Controllers
                 _logger.LogError(ex, "Can't get user from HttpContext");
                 return BadRequest();
             }
+        }
 
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> UpdateUserInfo(EditUserRequest request)
+        {
+            var userId = GetUserId();
+
+            var isModified = await _userAppService.UpdateUserInfo(request , userId);
+
+            return Ok(isModified);
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUsers()
+        {
+            IEnumerable<UserDto> users = new List<UserDto>();
+
+            return Ok(users); // TODO: Call user service
+        }
+
+        private string GetUserId()
+        {
+            var user = HttpContext.User;
+
+            if (user == null)
+                throw new Exception();
+
+            var userClaims = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
+
+            if (userClaims == null)
+                throw new Exception();
+
+            if (string.IsNullOrEmpty(userClaims.Value))
+                throw new Exception();
+
+            return userClaims.Value;
         }
     }
 }
