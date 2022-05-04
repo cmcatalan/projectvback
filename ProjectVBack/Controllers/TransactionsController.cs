@@ -6,7 +6,8 @@ using System.Security.Claims;
 namespace ProjectVBack.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     public class TransactionsController : ControllerBase
     {
         private readonly ILogger<TransactionsController> _logger;
