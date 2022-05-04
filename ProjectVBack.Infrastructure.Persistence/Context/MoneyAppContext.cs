@@ -11,7 +11,6 @@ namespace ProjectVBack.Infrastructure.Persistence
         const string TransactionsTableName = "Transactions";
         public DbSet<Category> Categories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<User> Users { get; set; }
         public MoneyAppContext(DbContextOptions<MoneyAppContext> options) : base(options)
         {
         }
