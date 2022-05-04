@@ -7,8 +7,9 @@ using System.Security.Claims;
 
 namespace ProjectVBack.WebApi.Services.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     public class UsersController : ControllerBase
     {
         private readonly IUserAppService _userAppService;

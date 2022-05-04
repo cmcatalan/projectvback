@@ -5,8 +5,9 @@ using ProjectVBack.Application.Services;
 
 namespace ProjectVBack.WebApi.Services.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     public class AuthController : ControllerBase
     {
         private readonly IUserAppService _userAppService;
