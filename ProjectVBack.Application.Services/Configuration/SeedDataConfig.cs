@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ProjectVBack.Crosscutting.Utils;
 using ProjectVBack.Domain.Entities;
+using ProjectVBack.Domain.Repositories.Abstractions;
 using ProjectVBack.Infrastructure.Persistence;
 
 namespace ProjectVBack.Application.Services.Configuration
@@ -15,10 +17,19 @@ namespace ProjectVBack.Application.Services.Configuration
             using var scope = scopeFactory.CreateScope();
 
             var context = scope.ServiceProvider.GetRequiredService<MoneyAppContext>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             context.Database.EnsureCreated();
+
+            await UsersSeed(scope);
+            await CategoriesSeed(scope);
+
+            return app;
+        }
+
+        private async static Task UsersSeed(IServiceScope scope)
+        {
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             if (!userManager.Users.Any())
             {
@@ -28,35 +39,181 @@ namespace ProjectVBack.Application.Services.Configuration
                 await roleManager.CreateAsync(new IdentityRole { Name = adminRole });
                 await roleManager.CreateAsync(new IdentityRole { Name = userRole });
 
+                var defaultRoles = new List<string>() { adminRole, userRole };
+
                 var defaultPassword = "P@ss.W0rd";
 
-                var newUser = new User
-                {
-                    Email = "guillermo.cuenca@col.vueling.com",
-                    FirstName = "Guillermo",
-                    LastName = "Cuenca",
-                    UserName = "guillermo.cuenca"
+                var usersToAdd = new List<User>() {
+                    new User
+                    {
+                        Email = "guillermo.cuenca@col.vueling.com",
+                        FirstName = "Guillermo",
+                        LastName = "Cuenca",
+                        UserName = "guillermo.cuenca"
+                    },
+                    new User
+                    {
+                        Email = "cesar.catalan@col.vueling.com",
+                        FirstName = "Miguel",
+                        LastName = "Catalan",
+                        UserName = "miguel.catalan"
+                    }
                 };
 
-                await userManager.CreateAsync(newUser, defaultPassword);
-
-                await userManager.AddToRoleAsync(newUser, adminRole);
-                await userManager.AddToRoleAsync(newUser, userRole);
-
-                var newUser1 = new User
+                foreach (var user in usersToAdd)
                 {
-                    Email = "cesar.catalan@col.vueling.com",
-                    FirstName = "Miguel",
-                    LastName = "Catalan",
-                    UserName = "miguel.catalan"
-                };
-                await userManager.CreateAsync(newUser1, defaultPassword);
+                    await userManager.CreateAsync(user, defaultPassword);
 
-                await userManager.AddToRoleAsync(newUser1, adminRole);
-                await userManager.AddToRoleAsync(newUser1, userRole);
+                    foreach (var defaultRole in defaultRoles)
+                        await userManager.AddToRoleAsync(user, defaultRole);
+                }
             }
-
-            return app;
         }
+
+        private async static Task CategoriesSeed(IServiceScope scope)
+        {
+            var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+            var categories = await unitOfWork.Categories.Get();
+
+            if (!categories.Any())
+            {
+                var categoriesToAdd = new List<Category>() {
+                    new Category(){
+                        Id = 1,
+                        Type= CategoryType.Expense,
+                        Name = "Bills",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },
+                    new Category(){
+                        Id= 2,
+                        Type= CategoryType.Expense,
+                        Name = "Car",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id =3,
+                        Type= CategoryType.Expense,
+                        Name = "Clothes",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id =4,
+                        Type= CategoryType.Expense,
+                        Name = "Communications",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id =5,
+                        Type= CategoryType.Expense,
+                        Name = "Eating out",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id =6,
+                        Type= CategoryType.Expense,
+                        Name = "Entertainment",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 7,
+                        Type= CategoryType.Expense,
+                        Name = "Food",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 8,
+                        Type= CategoryType.Expense,
+                        Name = "Gifts",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 9,
+                        Type= CategoryType.Expense,
+                        Name = "Health",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 10,
+                        Type= CategoryType.Expense,
+                        Name = "House",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 11,
+                        Type= CategoryType.Expense,
+                        Name = "Pets",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 12,
+                        Type= CategoryType.Expense,
+                        Name = "Sports",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 13,
+                        Type= CategoryType.Expense,
+                        Name = "Taxi",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 14,
+                        Type= CategoryType.Expense,
+                        Name = "Toiletry",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 15,
+                        Type= CategoryType.Expense,
+                        Name = "Transport",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 16,
+                        Type= CategoryType.Income,
+                        Name = "Deposits",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 17,
+                        Type= CategoryType.Income,
+                        Name = "Salary",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },new Category(){
+                        Id = 18,
+                        Type= CategoryType.Income,
+                        Name = "Savings",
+                        PictureUrl = "",
+                        Description = "",
+                        IsDefault = true,
+                    },
+                };
+
+                await unitOfWork.Categories.AddRange(categoriesToAdd);
+
+                unitOfWork.Complete();
+            }
+        }
+
     }
 }
