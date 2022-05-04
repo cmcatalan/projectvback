@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ProjectVBack.Infrastructure.Repositories;
-using ProjectVBack.Domain.Entities;
-using ProjectVBack.Domain.Repositories.Abstractions;
+﻿using ProjectVBack.Domain.Repositories.Abstractions;
 
 namespace ProjectVBack.Application.Services.Implementations
 {

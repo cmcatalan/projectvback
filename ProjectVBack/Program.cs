@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using ProjectVBack.Application.Services;
 using ProjectVBack.Application.Services.Configuration;
-using System.Text;
 using Serilog;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 

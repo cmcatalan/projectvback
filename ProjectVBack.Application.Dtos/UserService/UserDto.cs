@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProjectVBack.Application.Dtos.UserService
+﻿namespace ProjectVBack.Application.Dtos
 {
     public class UserDto
     {

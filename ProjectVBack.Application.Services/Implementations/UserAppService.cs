@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ProjectVBack.Application.Dtos;
-using ProjectVBack.Application.Dtos.UserService;
 using ProjectVBack.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -78,7 +77,7 @@ namespace ProjectVBack.Application.Services
                 newUserDto.LastName = newUser.LastName;
                 newUserDto.UserName = newUser.UserName;
                 newUserDto.Id = newUser.Id;
-                newUserDto.Email = newUser.Email;   
+                newUserDto.Email = newUser.Email;
 
                 return newUserDto;
             }
@@ -96,7 +95,7 @@ namespace ProjectVBack.Application.Services
             UserDto userDto = new UserDto()
             {
                 FirstName = user.FirstName,
-                LastName= user.LastName,
+                LastName = user.LastName,
                 Email = user.Email,
                 UserName = user.UserName,
             };
@@ -104,7 +103,7 @@ namespace ProjectVBack.Application.Services
             return userDto;
         }
 
-        public async Task<UserDto> UpdateUserInfo(EditUserRequest request , string id)
+        public async Task<UserDto> UpdateUserInfo(EditUserRequest request, string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
@@ -130,7 +129,7 @@ namespace ProjectVBack.Application.Services
 
                     result = await _userManager.UpdateAsync(user);
 
-                    if(!result.Succeeded)
+                    if (!result.Succeeded)
                         throw new Exception();
 
                     var userUpdated = await GetUserInfoAsync(id);

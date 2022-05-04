@@ -11,7 +11,7 @@ namespace ProjectVBack.Controllers
         private readonly ILogger<CategoriesController> _logger;
         private readonly ICategoryAppService _categoryAppService;
 
-        public CategoriesController(ILogger<CategoriesController> logger , ICategoryAppService categoryAppService)
+        public CategoriesController(ILogger<CategoriesController> logger, ICategoryAppService categoryAppService)
         {
             _logger = logger;
             _categoryAppService = categoryAppService;

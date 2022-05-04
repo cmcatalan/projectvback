@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVBack.Application.Dtos;
-using ProjectVBack.Application.Dtos.UserService;
 using ProjectVBack.Application.Services;
 using System.Security.Claims;
 
@@ -49,7 +48,7 @@ namespace ProjectVBack.WebApi.Services.Controllers
         {
             var userId = GetUserId();
 
-            var isModified = await _userAppService.UpdateUserInfo(request , userId);
+            var isModified = await _userAppService.UpdateUserInfo(request, userId);
 
             return Ok(isModified);
         }

@@ -16,7 +16,7 @@ namespace ProjectVBack.Application.Services.Configuration
             var connectionString = configuration["ConnectionString:DefaultConnection"];
             var mySqlServerVersion = new MySqlServerVersion(new Version(8, 0, 23));
 
-            //services.AddAutoMapper(typeof(AppProfile));
+            services.AddAutoMapper(typeof(GlobalAppProfile));
 
             services.AddTransient<ICategoriesRepository, CategoriesRepository>();
             services.AddTransient<ITransactionsRepository, TransactionsRepository>();
@@ -26,7 +26,6 @@ namespace ProjectVBack.Application.Services.Configuration
                 .AddIdentityCore<User>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MoneyAppContext>();
-            //services.AddTransient<IRepository<Invoice>, InvoiceRepository>();
 
             return services;
         }
