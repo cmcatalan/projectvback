@@ -42,11 +42,11 @@ namespace ProjectVBack.WebApi.Services.Controllers
         {
             try
             {
-                var isCreated = await _userAppService.SignUp(request);
-                if (!isCreated)
+                var newUserDto = await _userAppService.SignUp(request);
+                if (newUserDto == null)
                     return BadRequest();
 
-                return Ok();
+                return Ok(newUserDto);
             }
             catch (Exception ex)
             {

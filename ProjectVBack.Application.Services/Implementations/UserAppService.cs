@@ -53,7 +53,7 @@ namespace ProjectVBack.Application.Services
             return jwt;
         }
 
-        public async Task<bool> SignUp(RegisterRequest request)
+        public async Task<UserDto> SignUp(RegisterRequest request)
         {
             var newUser = new User
             {
@@ -64,8 +64,26 @@ namespace ProjectVBack.Application.Services
             };
 
             var result = await _userManager.CreateAsync(newUser, request.Password);
-            
-            return result.Succeeded;
+
+            if (result.Succeeded)
+            {
+                newUser = await _userManager.FindByEmailAsync(request.Email);
+
+                if (newUser == null)
+                    throw new Exception();
+
+                UserDto newUserDto = new UserDto();
+
+                newUserDto.FirstName = newUser.FirstName;
+                newUserDto.LastName = newUser.LastName;
+                newUserDto.UserName = newUser.UserName;
+                newUserDto.Id = newUser.Id;
+                newUserDto.Email = newUser.Email;   
+
+                return newUserDto;
+            }
+
+            throw new Exception();
         }
 
         public async Task<UserDto> GetUserInfoAsync(string userId)
@@ -73,7 +91,7 @@ namespace ProjectVBack.Application.Services
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null) //Add custom ex user not found
-                return null;
+                throw new Exception();
 
             UserDto userDto = new UserDto()
             {
@@ -84,6 +102,48 @@ namespace ProjectVBack.Application.Services
             };
 
             return userDto;
+        }
+
+        public async Task<UserDto> UpdateUserInfo(EditUserRequest request , string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                throw new Exception();
+
+            string oldName = user.FirstName;
+            string oldLastName = user.LastName;
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                var passwordResult = await _userManager.ChangePasswordAsync(user, request.OldPassword, request.NewPassword);
+
+                if (!passwordResult.Succeeded)
+                {
+                    user.FirstName = oldName;
+                    user.LastName = oldLastName;
+
+                    result = await _userManager.UpdateAsync(user);
+
+                    if(!result.Succeeded)
+                        throw new Exception();
+
+                    var userUpdated = await GetUserInfoAsync(id);
+                    return userUpdated;
+                }
+                else
+                {
+                    var userUpdated = await GetUserInfoAsync(id);
+                    return userUpdated;
+                }
+            }
+
+            throw new Exception();
         }
     }
 }
