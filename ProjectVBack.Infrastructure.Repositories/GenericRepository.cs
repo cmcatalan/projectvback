@@ -21,6 +21,11 @@ namespace ProjectVBack.Infrastructure.Repositories
             return addedItem.Entity;
         }
 
+        public async Task AddRange(IEnumerable<TEntity> itemsToAdd)
+        {
+            await _context.Set<TEntity>().AddRangeAsync(itemsToAdd);
+        }
+
         public async Task<TEntity> Get(int itemId)
         {
             return await _context.Set<TEntity>().FindAsync(itemId);
@@ -40,8 +45,7 @@ namespace ProjectVBack.Infrastructure.Repositories
         {
             var row = await _context.Set<TEntity>().SingleOrDefaultAsync(x => x.Id == itemToUpdate.Id);
 
-            if (row == null)
-                return row;
+            if (row == null) return null;
 
             itemToUpdate.UpdatedAt = DateTime.Now.ToUniversalTime();
 
