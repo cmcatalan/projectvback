@@ -1,12 +1,11 @@
-﻿using ProjectVBack.Crosscutting.Utils;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ProjectVBack.Domain.Entities
 {
     public class Transaction : BaseEntity
     {
         public string Description { get; set; }
-        
+
         [Required]
         public double Value { get; set; }
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using ProjectVBack.Crosscutting.Utils;
 using ProjectVBack.Domain.Entities;
 using ProjectVBack.Domain.Repositories.Abstractions;

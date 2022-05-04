@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using ProjectVBack.Domain.Entities;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProjectVBack.Crosscutting.Utils;
+using ProjectVBack.Domain.Entities;
 
 namespace ProjectVBack.Infrastructure.Persistence
 {

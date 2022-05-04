@@ -1,8 +1,8 @@
-﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProjectVBack.Domain.Entities;
 using ProjectVBack.Domain.Repositories.Abstractions;
 using ProjectVBack.Infrastructure.Persistence;
+using System.Linq.Expressions;
 
 namespace ProjectVBack.Infrastructure.Repositories
 {
