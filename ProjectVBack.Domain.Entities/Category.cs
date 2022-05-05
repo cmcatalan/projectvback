@@ -12,7 +12,7 @@ namespace ProjectVBack.Domain.Entities
         public string Description { get; set; }
         public bool IsDefault { get; set; }
 
-        public ICollection<User> Users { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }

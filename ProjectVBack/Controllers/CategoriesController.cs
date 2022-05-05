@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectVBack.Application.Dtos;
 using ProjectVBack.Application.Services;
+using System.Security.Claims;
 
 namespace ProjectVBack.Controllers
 {
@@ -17,7 +20,27 @@ namespace ProjectVBack.Controllers
             _categoryAppService = categoryAppService;
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddCategory(AddCategoryRequest request)
+        {
+            var user = HttpContext.User;
 
+            if (user == null)
+                throw new Exception();
+
+            var userId = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
+
+            if (userId == null)
+                throw new Exception();
+
+            var result = await _categoryAppService.CreateCategoryAsync(request , userId.Value);
+
+            if (result == null)
+                throw new Exception();
+
+            return Ok(result);
+        }
 
         //TODO Get all categories only by user logged, user_id from usermanager
         //TODO Get category by id only by user logged, user_id from usermanager
