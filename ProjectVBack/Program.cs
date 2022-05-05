@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDependency(builder.Configuration);
 builder.Services.AddTransient<IUserAppService, UserAppService>();
+builder.Services.AddTransient<ICategoryAppService, CategoryAppService>();
 builder.Services
     .AddHttpContextAccessor()
     .AddAuthorization()
