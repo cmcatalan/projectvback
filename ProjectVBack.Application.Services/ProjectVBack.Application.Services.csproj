@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectVBack.Application.Dtos\ProjectVBack.Application.Dtos.csproj" />
+    <ProjectReference Include="..\ProjectVBack.Crosscutting.CustomExceptions\ProjectVBack.Crosscutting.CustomExceptions.csproj" />
     <ProjectReference Include="..\ProjectVBack.Domain.Repositories.Abstractions\ProjectVBack.Domain.Repositories.Abstractions.csproj" />
     <ProjectReference Include="..\ProjectVBack.Infrastructure.Persistence\ProjectVBack.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\ProjectVBack.Infrastructure.Repositories\ProjectVBack.Infrastructure.Repositories.csproj" />

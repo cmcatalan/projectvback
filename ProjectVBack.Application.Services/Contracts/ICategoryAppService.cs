@@ -1,10 +1,14 @@
 ﻿using ProjectVBack.Application.Dtos;
-using ProjectVBack.Domain.Entities;
+using ProjectVBack.Application.Dtos.CategoryService;
 
 namespace ProjectVBack.Application.Services
 {
     public interface ICategoryAppService
     {
-        Task<Category> CreateCategoryAsync(AddCategoryRequest request, string userId);
+        Task<CategoryDto> CreateCategoryAsync(AddCategoryRequest request, string userId);
+        Task<CategoryDto> GetCategoryAsync(int categoryId, string userId);
+        Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync(string userId);
+        Task<CategoryDto> EditCategoryAsync(EditCategoryRequest request , string userId);
+        Task<CategoryDto> DeleteCategoryAsync(int categoryId , string userId);
     }
 }

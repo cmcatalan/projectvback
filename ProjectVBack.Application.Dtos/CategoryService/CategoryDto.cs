@@ -15,8 +15,6 @@ namespace ProjectVBack.Application.Dtos.CategoryService
         public string PictureUrl { get; set; }
         public string Description { get; set; }
         public bool IsDefault { get; set; }
-
-        public ICollection<User> Users { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
+        public int Id { get; set; }
     }
 }

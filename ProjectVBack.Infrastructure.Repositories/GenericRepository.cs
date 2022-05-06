@@ -48,7 +48,7 @@ namespace ProjectVBack.Infrastructure.Repositories
 
         public async Task<TEntity?> UpdateAsync(TEntity itemToUpdate)
         {
-            var row = await _context.Set<TEntity>().SingleOrDefaultAsync(x => x.Id == itemToUpdate.Id);
+            var row = await _context.Set<TEntity>().AsNoTracking().SingleOrDefaultAsync(x => x.Id == itemToUpdate.Id);
 
             if (row == null) return null;
 
@@ -61,13 +61,13 @@ namespace ProjectVBack.Infrastructure.Repositories
 
         public async Task<TEntity?> SoftDeleteAsync(TEntity itemToDelete)
         {
-            var row = await _context.Set<TEntity>().SingleOrDefaultAsync(x => x.Id == itemToDelete.Id);
+            var row = await _context.Set<TEntity>().AsNoTracking().SingleOrDefaultAsync(x => x.Id == itemToDelete.Id);
 
             if (row == null) return null;
 
             itemToDelete.IsDeleted = true;
             itemToDelete.DeletedAt = DateTime.Now.ToUniversalTime();
-
+            
             _context.Entry(itemToDelete).State = EntityState.Modified;
 
             return row;
