@@ -24,7 +24,7 @@ namespace ProjectVBack.Controllers
         [Authorize]
         public async Task<IActionResult> AddCategory(AddCategoryRequest request)
         {
-            var user = HttpContext.User;
+             var user = HttpContext.User;
 
             if (user == null)
                 throw new Exception();

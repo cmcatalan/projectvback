@@ -19,8 +19,8 @@ namespace ProjectVBack.Application.Services.Configuration
 
             context.Database.EnsureCreated();
 
-            await UsersSeed(scope);
             await CategoriesSeed(scope);
+            await UsersSeed(scope);
 
             return app;
         }
@@ -29,6 +29,9 @@ namespace ProjectVBack.Application.Services.Configuration
         {
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+            var defaultCategories = await unitOfWork.Categories.GetDefaultCategoriesAsync();
 
             var haveUsers = userManager.Users.Any();
 
@@ -50,16 +53,21 @@ namespace ProjectVBack.Application.Services.Configuration
                         Email = "guillermo.cuenca@col.vueling.com",
                         FirstName = "Guillermo",
                         LastName = "Cuenca",
-                        UserName = "guillermo.cuenca"
+                        UserName = "guillermo.cuenca",
+                        Categories = defaultCategories.ToList()
+                        
                     },
                     new User
                     {
                         Email = "cesar.catalan@col.vueling.com",
                         FirstName = "Miguel",
                         LastName = "Catalan",
-                        UserName = "miguel.catalan"
+                        UserName = "miguel.catalan",
+                        Categories = defaultCategories.ToList()
                     }
                 };
+
+                unitOfWork.Complete();
 
                 foreach (var user in usersToAdd)
                 {

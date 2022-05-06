@@ -25,5 +25,12 @@ namespace ProjectVBack.Infrastructure.Repositories
                 .Where(category => category.Users.Any(user => user.Id == userId))
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<Category>> GetDefaultCategoriesAsync()
+        {
+            return await _context.Categories
+                .Where(category => category.IsDefault == true)
+                .ToListAsync();
+        }
     }
 }

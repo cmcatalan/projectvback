@@ -6,5 +6,6 @@ namespace ProjectVBack.Domain.Repositories.Abstractions
     {
         Task<Category?> GetCategoryWithUsersByIdAsync(int id);
         Task<IEnumerable<Category>> GetAllCategoriesAsync(string  id);
+        Task<IEnumerable<Category>> GetDefaultCategoriesAsync();
     }
 }
