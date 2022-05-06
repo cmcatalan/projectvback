@@ -10,7 +10,7 @@ namespace ProjectVBack.Domain.Entities
         public string Name { get; set; }
         public string PictureUrl { get; set; }
         public string Description { get; set; }
-        public bool IsDefault { get; set; }
+        public bool IsDefault { get; set; } = false;
 
         public ICollection<User> Users { get; set; } = new List<User>();
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();

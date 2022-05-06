@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectVBack.Crosscutting.Utils\ProjectVBack.Crosscutting.Utils.csproj" />
+    <ProjectReference Include="..\ProjectVBack.Domain.Entities\ProjectVBack.Domain.Entities.csproj" />
   </ItemGroup>
 
 </Project>

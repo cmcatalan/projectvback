@@ -42,10 +42,68 @@ namespace ProjectVBack.Controllers
             return Ok(result);
         }
 
-        //TODO Get all categories only by user logged, user_id from usermanager
-        //TODO Get category by id only by user logged, user_id from usermanager
-        //TODO Post category (type, name, image_url, description) user_id from usermanager
-        //TODO Put category (id, type, name, image_url, description) user_id from usermanager
-        //TODO Delete category (id) user_id from usermanager
+        [HttpGet]
+        [Authorize]
+        [Route("{categoryId}")]
+        public async Task<IActionResult> GetCategoryById(int categoryId)
+        {
+            var userId = GetUserId();
+
+            var category = await _categoryAppService.GetCategoryAsync(categoryId , userId);
+
+            return Ok(category);
+        }
+
+        private string GetUserId()
+        {
+            var user = HttpContext.User;
+
+            if (user == null)
+                throw new Exception();
+
+            var userClaims = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
+
+            if (userClaims == null)
+                throw new Exception();
+
+            if (string.IsNullOrEmpty(userClaims.Value))
+                throw new Exception();
+
+            return userClaims.Value;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var userId = GetUserId();
+
+            var categoriesList = await _categoryAppService.GetAllCategoriesAsync(userId);
+
+            return Ok(categoriesList);
+        }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> EditCategory(EditCategoryRequest request)
+        {
+            var userId = GetUserId();
+
+            var categorieEdited = await _categoryAppService.EditCategoryAsync(request , userId);
+
+            return Ok(categorieEdited);
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("{categoryId}")]
+        public async Task<IActionResult> DeleteCategory(int categoryId)
+        {
+            var userId = GetUserId();
+
+            var deletedCategory = await _categoryAppService.DeleteCategoryAsync(categoryId , userId);
+            
+            return Ok(deletedCategory);
+        }
     }
 }
