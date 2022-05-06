@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ProjectVBack.Application.Dtos;
 using ProjectVBack.Domain.Entities;
+using ProjectVBack.Domain.Repositories.Abstractions;
+using ProjectVBack.Crosscutting.CustomExceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,10 +15,12 @@ namespace ProjectVBack.Application.Services
     {
         private readonly IConfiguration _configuration;
         private readonly UserManager<User> _userManager;
-        public UserAppService(IConfiguration configuration, UserManager<User> userManager)
+        private readonly IUnitOfWork _unitOfWork;
+        public UserAppService(IConfiguration configuration, UserManager<User> userManager, IUnitOfWork unitOfWork)
         {
             _configuration = configuration;
             _userManager = userManager;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<string> LogIn(AuthenticateRequest request)
@@ -54,6 +58,8 @@ namespace ProjectVBack.Application.Services
 
         public async Task<UserDto> SignUp(RegisterRequest request)
         {
+            var defaultCategories = await _unitOfWork.Categories.GetDefaultCategoriesAsync();
+
             var newUser = new User
             {
                 Email = request.Email,
@@ -62,14 +68,18 @@ namespace ProjectVBack.Application.Services
                 UserName = request.UserName
             };
 
+            newUser.Categories = defaultCategories.ToList();
+
             var result = await _userManager.CreateAsync(newUser, request.Password);
+
+            _unitOfWork.Complete();
 
             if (result.Succeeded)
             {
                 newUser = await _userManager.FindByEmailAsync(request.Email);
 
                 if (newUser == null)
-                    throw new Exception();
+                    throw new AppIGetMoneyException();
 
                 UserDto newUserDto = new UserDto();
 
@@ -82,7 +92,7 @@ namespace ProjectVBack.Application.Services
                 return newUserDto;
             }
 
-            throw new Exception();
+            throw new AppIGetMoneyException();
         }
 
         public async Task<UserDto> GetUserInfoAsync(string userId)
