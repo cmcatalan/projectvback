@@ -28,7 +28,7 @@ namespace ProjectVBack.Application.Services
             var user = await _userManager.FindByNameAsync(request.UserName) as User;
 
             if (user is null || !await _userManager.CheckPasswordAsync(user, request.Password))
-                throw new Exception("Can't find user");
+                throw new AppIGetMoneyUserNotFoundException();
 
             var roles = await _userManager.GetRolesAsync(user);
 
@@ -79,7 +79,7 @@ namespace ProjectVBack.Application.Services
                 newUser = await _userManager.FindByEmailAsync(request.Email);
 
                 if (newUser == null)
-                    throw new AppIGetMoneyException();
+                    throw new AppIGetMoneyUserNotFoundException();
 
                 UserDto newUserDto = new UserDto();
 
@@ -99,8 +99,8 @@ namespace ProjectVBack.Application.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null) //Add custom ex user not found
-                throw new Exception();
+            if (user == null)
+                throw new AppIGetMoneyUserNotFoundException();
 
             UserDto userDto = new UserDto()
             {
@@ -118,7 +118,7 @@ namespace ProjectVBack.Application.Services
             var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
-                throw new Exception();
+                throw new AppIGetMoneyUserNotFoundException();
 
             string oldName = user.FirstName;
             string oldLastName = user.LastName;
@@ -140,7 +140,7 @@ namespace ProjectVBack.Application.Services
                     result = await _userManager.UpdateAsync(user);
 
                     if (!result.Succeeded)
-                        throw new Exception();
+                        throw new AppIGetMoneyException();
 
                     var userUpdated = await GetUserInfoAsync(id);
                     return userUpdated;
@@ -152,7 +152,7 @@ namespace ProjectVBack.Application.Services
                 }
             }
 
-            throw new Exception();
+            throw new AppIGetMoneyException();
         }
     }
 }
