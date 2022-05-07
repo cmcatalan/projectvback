@@ -14,10 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDependency(builder.Configuration);
 
 builder.Services.AddHealthChecks();
 builder.Services.AddHealthChecksUI().AddInMemoryStorage();
-builder.Services.AddDependency(builder.Configuration);
 builder.Services.AddTransient<IUserAppService, UserAppService>();
 builder.Services.AddTransient<ICategoryAppService, CategoryAppService>();
 builder.Services.AddTransient<ITransactionAppService, TransactionAppService>();
@@ -93,7 +93,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-
 });
 
 app.MapHealthChecksUI();
