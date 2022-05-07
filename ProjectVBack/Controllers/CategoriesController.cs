@@ -25,7 +25,7 @@ namespace ProjectVBack.Controllers
         [Authorize]
         public async Task<IActionResult> AddCategory(AddCategoryRequest request)
         {
-             var user = HttpContext.User;
+            var user = HttpContext.User;
 
             if (user == null)
                 throw new AppIGetMoneyUserNotFoundException();
@@ -35,7 +35,7 @@ namespace ProjectVBack.Controllers
             if (userId == null)
                 throw new AppIGetMoneyException();
 
-            var result = await _categoryAppService.CreateCategoryAsync(request , userId.Value);
+            var result = await _categoryAppService.CreateCategoryAsync(request, userId.Value);
 
             if (result == null)
                 throw new AppIGetMoneyCategoryCreationException();
@@ -50,27 +50,12 @@ namespace ProjectVBack.Controllers
         {
             var userId = GetUserId();
 
-            var category = await _categoryAppService.GetCategoryAsync(categoryId , userId);
+            var category = await _categoryAppService.GetCategoryAsync(categoryId, userId);
 
-            if(category == null)
+            if (category == null)
                 throw new AppIGetMoneyCategroyNotFoundException();
 
             return Ok(category);
-        }
-
-        private string GetUserId()
-        {
-            var user = HttpContext.User;
-
-            if (user == null)
-                throw new AppIGetMoneyUserNotFoundException();
-
-            var userClaims = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
-
-            if (string.IsNullOrEmpty(userClaims.Value))
-                throw new AppIGetMoneyException();
-
-            return userClaims.Value;
         }
 
         [HttpGet]
@@ -93,7 +78,7 @@ namespace ProjectVBack.Controllers
         {
             var userId = GetUserId();
 
-            var categorieEdited = await _categoryAppService.EditCategoryAsync(request , userId);
+            var categorieEdited = await _categoryAppService.EditCategoryAsync(request, userId);
 
             if (categorieEdited == null)
                 throw new AppIGetMoneyCategroyNotFoundException();
@@ -108,12 +93,29 @@ namespace ProjectVBack.Controllers
         {
             var userId = GetUserId();
 
-            var deletedCategory = await _categoryAppService.DeleteCategoryAsync(categoryId , userId);
+            var deletedCategory = await _categoryAppService.DeleteCategoryAsync(categoryId, userId);
 
             if (deletedCategory == null)
                 throw new AppIGetMoneyCategroyNotFoundException();
-            
+
             return Ok(deletedCategory);
+        }
+
+        private string GetUserId()
+        {
+            var claims = HttpContext.User.Claims;
+
+            if (claims == null || !claims.Any())
+                throw new AppIGetMoneyException(nameof(claims));
+
+            var claim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid);
+
+            if (claim == null || string.IsNullOrEmpty(claim.Value))
+                throw new AppIGetMoneyException(nameof(claim));
+
+            var userId = claim.Value;
+
+            return userId;
         }
     }
 }

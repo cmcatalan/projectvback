@@ -1,6 +1,9 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVBack.Application.Dtos;
+using ProjectVBack.Application.Services;
+using ProjectVBack.Crosscutting.CustomExceptions;
 using System.Security.Claims;
 
 namespace ProjectVBack.Controllers
@@ -11,42 +14,31 @@ namespace ProjectVBack.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly ILogger<TransactionsController> _logger;
+        private readonly ITransactionAppService _transactionsAppService;
 
-        public TransactionsController(ILogger<TransactionsController> logger)
+        public TransactionsController(ILogger<TransactionsController> logger, ITransactionAppService transactionsAppService, IMapper mapper)
         {
             _logger = logger;
+            _transactionsAppService = transactionsAppService;
         }
-        // CRUD CREATE READ UPDATE DELETE --> CREATE = POST, READ = GET, UPDATE = PUT, DELETE = DELETE
-        //TODO Get all transactions by user logged, from DateTime and to DateTime optional (fromDatetime, toDatetime = null)
-        //TODO Get summary transactions by type by user logged, from DateTime and to DateTime optional (fromDatetime, toDatetime = null)
-        // returns object with Summary(Incomes, Expenses, Total)
-        //TODO Get transactions sum amount group by category by user logged, from DateTime and to DateTime optional 
-        //TODO Post transaction by user logged, (description, categoryId, dateTimeTransaction, amount)
-        //TODO Put transaction by user logged, (description, categoryId, dateTimeTransaction, amount)
-        //TODO Delete transaction by user logged (id)
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Get([FromQuery] GetTransactionsRequest request)
         {
             var userId = GetUserId();
+            var transactions = await _transactionsAppService.GetAllTransactionsWithCategoryInfo(userId, request);
 
-            var transactions = new List<TransactionCategoryDto>();
-            transactions.Add(new TransactionCategoryDto(1, "description transaction 1", 12.5, DateTime.Now.AddDays(-1), "Expense", "Cinema", "", true));
-            transactions.Add(new TransactionCategoryDto(2, "description transaction 2", 14.5, DateTime.Now.AddDays(-2), "Expense", "Restaurant", "", true));
-            transactions.Add(new TransactionCategoryDto(3, "description transaction 3", 2.5, DateTime.Now.AddDays(-2), "Expense", "Pen", "", true));
-            transactions.Add(new TransactionCategoryDto(4, "description transaction 4", 100, DateTime.Now.AddDays(-3), "Expense", "Travel", "", true));
-            //todo call transactions service
             return Ok(transactions);
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetSummary([FromQuery] GetTransactionsRequest request)
+        public async Task<IActionResult> GetSummary([FromQuery] GetTransactionsSummaryRequest request)
         {
             var userId = GetUserId();
-            var summary = new TransactionsSummaryDto(90, 100, 90 - 100);
-            //todo call transactions service
+            var summary = await _transactionsAppService.GetSummary(userId, request);
+
             return Ok(summary);
         }
 
@@ -55,12 +47,8 @@ namespace ProjectVBack.Controllers
         public async Task<IActionResult> GetTransactionsSumGroupByCategory([FromQuery] GetTransactionsRequest request)
         {
             var userId = GetUserId();
+            var transactionsSumGroupByCategories = await _transactionsAppService.GetTransactionsSumGroupByCategory(userId, request);
 
-            var transactionsSumGroupByCategories = new List<TransactionsSumGroupByCategory>();
-
-            transactionsSumGroupByCategories.Add(new TransactionsSumGroupByCategory(1, "Expense", "Cinema", "", true, 100.2));
-            transactionsSumGroupByCategories.Add(new TransactionsSumGroupByCategory(2, "Expense", "Restaurant", "", true, 99.2));
-            //todo call transactions service
             return Ok(transactionsSumGroupByCategories);
         }
 
@@ -69,10 +57,9 @@ namespace ProjectVBack.Controllers
         public async Task<IActionResult> Add(AddTransactionRequest request)
         {
             var userId = GetUserId();
+            var addedTransaction = await _transactionsAppService.Add(userId, request);
 
-
-            //todo call transactions service
-            return Ok(new TransactionDto(1, "", 10.2, DateTime.Now, 1));
+            return Ok(addedTransaction);
         }
 
         [HttpPut]
@@ -80,19 +67,20 @@ namespace ProjectVBack.Controllers
         public async Task<IActionResult> Edit(EditTransactionRequest request)
         {
             var userId = GetUserId();
+            var editedTransaction = await _transactionsAppService.Edit(userId, request);
 
-            //todo call transactions service
-            return Ok(new TransactionDto(1, "", 10.2, DateTime.Now, 1));
+            return Ok(editedTransaction);
         }
 
         [HttpDelete]
         [Authorize]
         [Route("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int transactionId)
         {
             var userId = GetUserId();
-            //todo call transactions service delete transaction
-            return Ok(new TransactionDto(1, "", 10.2, DateTime.Now, 1));
+            var deletedTransaction = await _transactionsAppService.Delete(userId, transactionId);
+
+            return Ok(deletedTransaction);
         }
 
         private string GetUserId()
@@ -100,12 +88,12 @@ namespace ProjectVBack.Controllers
             var claims = HttpContext.User.Claims;
 
             if (claims == null || !claims.Any())
-                throw new ArgumentNullException(nameof(claims));
+                throw new AppIGetMoneyException(nameof(claims));
 
             var claim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid);
 
             if (claim == null || string.IsNullOrEmpty(claim.Value))
-                throw new NullReferenceException(nameof(claim));
+                throw new AppIGetMoneyException(nameof(claim));
 
             var userId = claim.Value;
 

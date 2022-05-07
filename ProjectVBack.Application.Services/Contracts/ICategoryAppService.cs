@@ -8,7 +8,7 @@ namespace ProjectVBack.Application.Services
         Task<CategoryDto> CreateCategoryAsync(AddCategoryRequest request, string userId);
         Task<CategoryDto> GetCategoryAsync(int categoryId, string userId);
         Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync(string userId);
-        Task<CategoryDto> EditCategoryAsync(EditCategoryRequest request , string userId);
-        Task<CategoryDto> DeleteCategoryAsync(int categoryId , string userId);
+        Task<CategoryDto> EditCategoryAsync(EditCategoryRequest request, string userId);
+        Task<CategoryDto> DeleteCategoryAsync(int categoryId, string userId);
     }
 }

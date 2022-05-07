@@ -7,6 +7,6 @@ namespace ProjectVBack.Application.Services
         Task<string> LogIn(AuthenticateRequest request);
         Task<UserDto> SignUp(RegisterRequest request);
         Task<UserDto> GetUserInfoAsync(string userId);
-        Task<UserDto> UpdateUserInfo(EditUserRequest request, string Id);
+        Task<UserDto> UpdateUserInfo(EditUserRequest request, string id);
     }
 }

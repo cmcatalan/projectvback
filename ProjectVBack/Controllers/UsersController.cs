@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectVBack.Application.Dtos;
 using ProjectVBack.Application.Services;
+using ProjectVBack.Crosscutting.CustomExceptions;
 using System.Security.Claims;
 
 namespace ProjectVBack.WebApi.Services.Controllers
@@ -24,22 +25,14 @@ namespace ProjectVBack.WebApi.Services.Controllers
         [Authorize]
         public async Task<IActionResult> GetUserInfo()
         {
-            try
-            {
-                var userId = GetUserId();
+            var userId = GetUserId();
 
-                var userInfo = await _userAppService.GetUserInfoAsync(userId);
+            var userInfo = await _userAppService.GetUserInfoAsync(userId);
 
-                if (userInfo == null)
-                    throw new AppIGetMoneyUserNotFoundException();
+            if (userInfo == null)
+                return NotFound();
 
-                return Ok(userInfo);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Can't get user from HttpContext");
-                return BadRequest();
-            }
+            return Ok(userInfo);
         }
 
         [HttpPut]
@@ -68,17 +61,19 @@ namespace ProjectVBack.WebApi.Services.Controllers
 
         private string GetUserId()
         {
-            var user = HttpContext.User;
+            var claims = HttpContext.User.Claims;
 
-            if (user == null)
-                throw new AppIGetMoneyUserNotFoundException();
+            if (claims == null || !claims.Any())
+                throw new AppIGetMoneyException(nameof(claims));
 
-            var userClaims = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
+            var claim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid);
 
-            if (userClaims == null)
-                throw new AppIGetMoneyUserNotFoundException();
+            if (claim == null || string.IsNullOrEmpty(claim.Value))
+                throw new AppIGetMoneyException(nameof(claim));
 
-            return userClaims.Value;
+            var userId = claim.Value;
+
+            return userId;
         }
     }
 }

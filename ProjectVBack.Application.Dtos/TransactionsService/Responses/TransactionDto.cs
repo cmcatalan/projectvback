@@ -5,5 +5,6 @@
         string Description,
         double Value,
         DateTime Date,
-        int CategoryId);
+        int CategoryId,
+        string UserId);
 }

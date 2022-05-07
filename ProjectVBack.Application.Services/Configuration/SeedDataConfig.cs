@@ -55,7 +55,7 @@ namespace ProjectVBack.Application.Services.Configuration
                         LastName = "Cuenca",
                         UserName = "guillermo.cuenca",
                         Categories = defaultCategories.ToList()
-                        
+
                     },
                     new User
                     {
