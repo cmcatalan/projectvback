@@ -10,10 +10,12 @@ namespace ProjectVBack.Application.Services.Configuration
         public GlobalAppProfile()
         {
             CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<Transaction, TransactionDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Category, AddCategoryRequest>().ReverseMap();
             CreateMap<Category, EditCategoryRequest>().ReverseMap();
+            CreateMap<Transaction, TransactionDto>().ReverseMap();
+            CreateMap<Transaction, AddTransactionRequest>().ReverseMap();
+            CreateMap<Transaction, EditTransactionRequest>().ReverseMap();
         }
     }
 }

@@ -74,7 +74,7 @@ namespace ProjectVBack.Controllers
 
         [HttpDelete]
         [Authorize]
-        [Route("{id}")]
+        [Route("{transactionId}")]
         public async Task<IActionResult> Delete(int transactionId)
         {
             var userId = GetUserId();

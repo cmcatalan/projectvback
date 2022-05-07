@@ -125,6 +125,8 @@ public class TransactionAppService : ITransactionAppService
 
         if (user == null) throw new AppIGetMoneyException();
 
+        transaction.UserId = userId;
+
         var transactionAdded = await _unitOfWork.Transactions.AddAsync(transaction);
 
         _unitOfWork.Complete();
