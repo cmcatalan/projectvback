@@ -13,6 +13,7 @@ steps:
 - script: |
     sudo apt update
     sudo apt install snapd
+    curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
     sudo snap install heroku --classic
   displayName: 'i heroku cli'
 
