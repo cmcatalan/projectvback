@@ -1,9 +1,12 @@
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectVBack.Application.Services;
 using ProjectVBack.Application.Services.Configuration;
+using ProjectVBack.Infrastructure.Persistence;
 using ProjectVBack.WebApi.Services.Middlewares;
 using Serilog;
 using System.Text;
@@ -12,6 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 builder.Services.AddDependency(builder.Configuration);
 builder.Services.AddTransient<IUserAppService, UserAppService>();
 builder.Services.AddTransient<ICategoryAppService, CategoryAppService>();
@@ -83,6 +89,14 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapHealthChecks("/healthz" , new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+
+});
+
+app.MapHealthChecksUI();
 
 app.UseHttpsRedirection();
 

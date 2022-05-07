@@ -27,6 +27,9 @@ namespace ProjectVBack.Application.Services.Configuration
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MoneyAppContext>();
 
+            services.AddHealthChecks().AddMySql(connectionString);
+            services.AddHealthChecks().AddDbContextCheck<MoneyAppContext>();
+
             return services;
         }
     }
