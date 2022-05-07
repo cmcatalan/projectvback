@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using ProjectVBack.Domain.Repositories.Abstractions;
-using ProjectVBack.Application.Dtos.CategoryService;
 using Microsoft.AspNetCore.Identity;
 using ProjectVBack.Application.Dtos;
-using ProjectVBack.Domain.Entities;
+using ProjectVBack.Application.Dtos.CategoryService;
 using ProjectVBack.Crosscutting.CustomExceptions;
+using ProjectVBack.Domain.Entities;
+using ProjectVBack.Domain.Repositories.Abstractions;
 
 namespace ProjectVBack.Application.Services
 {
@@ -21,15 +21,16 @@ namespace ProjectVBack.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<CategoryDto> CreateCategoryAsync(AddCategoryRequest request, string userId) //TODO: Change to Dto
+        public async Task<CategoryDto> CreateCategoryAsync(AddCategoryRequest request, string userId)
         {
             var actualUser = await _userManager.FindByIdAsync(userId);
 
-            Category categoryToAdd = _mapper.Map<Category>(request);
+            var categoryToAdd = _mapper.Map<Category>(request);
 
             categoryToAdd.Users.Add(actualUser);
 
             var result = await _unitOfWork.Categories.AddAsync(categoryToAdd);
+
             _unitOfWork.Complete();
 
             var categoryResult = _mapper.Map<CategoryDto>(result);
@@ -82,7 +83,7 @@ namespace ProjectVBack.Application.Services
 
             if (!categoryToEdit.IsDefault && categoryToEdit.Users.Contains(actualUser))
             {
-                categoryToEdit.Name =  request.Name;
+                categoryToEdit.Name = request.Name;
                 categoryToEdit.PictureUrl = request.PictureUrl;
                 categoryToEdit.Description = request.Description;
                 categoryToEdit.Type = request.Type;
@@ -99,7 +100,7 @@ namespace ProjectVBack.Application.Services
             throw new AppIGetMoneyException();
         }
 
-        public async Task<CategoryDto> DeleteCategoryAsync(int categoryId , string userId)
+        public async Task<CategoryDto> DeleteCategoryAsync(int categoryId, string userId)
         {
             var actualUser = await _userManager.FindByIdAsync(userId);
 
@@ -111,7 +112,7 @@ namespace ProjectVBack.Application.Services
             if (categoryToDelete == null)
                 throw new AppIGetMoneyCategroyNotFoundException();
 
-            if(!categoryToDelete.Users.Contains(actualUser))
+            if (!categoryToDelete.Users.Contains(actualUser))
                 throw new AppIGetMoneyException();
 
             if (categoryToDelete.IsDefault)

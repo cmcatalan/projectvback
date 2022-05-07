@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectVBack.Application.Services;
 using ProjectVBack.Application.Services.Configuration;
-using ProjectVBack.Infrastructure.Persistence;
 using ProjectVBack.WebApi.Services.Middlewares;
 using Serilog;
 using System.Text;
@@ -21,6 +20,7 @@ builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 builder.Services.AddDependency(builder.Configuration);
 builder.Services.AddTransient<IUserAppService, UserAppService>();
 builder.Services.AddTransient<ICategoryAppService, CategoryAppService>();
+builder.Services.AddTransient<ITransactionAppService, TransactionAppService>();
 builder.Services
     .AddHttpContextAccessor()
     .AddAuthorization()
@@ -90,7 +90,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
     app.UseSwaggerUI();
 }
 
-app.MapHealthChecks("/healthz" , new HealthCheckOptions
+app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 

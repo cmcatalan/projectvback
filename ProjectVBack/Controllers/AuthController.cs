@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjectVBack.Application.Dtos;
 using ProjectVBack.Application.Services;
-using ProjectVBack.Crosscutting.CustomExceptions;
-using ProjectVBack.Crosscutting.Utils;
 
 namespace ProjectVBack.WebApi.Services.Controllers
 {
@@ -45,34 +42,6 @@ namespace ProjectVBack.WebApi.Services.Controllers
                 _logger.LogError(ex, "Can't sign up");
                 return BadRequest();
             }
-        }
-
-        [HttpGet]
-        [Authorize(Roles = RoleUtils.Admin)]
-        public async Task<IActionResult> GetMe()
-        {
-            try
-            {
-                var user = HttpContext.User;
-
-                var claims = user.Claims.Select(s => new { s.Type, s.Value }).ToList();
-
-                var userInfo = new
-                {
-                    Claims = claims,
-                    user.Identity.Name,
-                    user.Identity.IsAuthenticated,
-                    user.Identity.AuthenticationType
-                };
-
-                return Ok(userInfo);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Can't get user from HttpContext");
-                return BadRequest();
-            }
-
         }
     }
 }

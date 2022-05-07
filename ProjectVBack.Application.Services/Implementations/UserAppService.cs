@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ProjectVBack.Application.Dtos;
+using ProjectVBack.Crosscutting.CustomExceptions;
 using ProjectVBack.Domain.Entities;
 using ProjectVBack.Domain.Repositories.Abstractions;
-using ProjectVBack.Crosscutting.CustomExceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -25,7 +25,7 @@ namespace ProjectVBack.Application.Services
 
         public async Task<string> LogIn(AuthenticateRequest request)
         {
-            var user = await _userManager.FindByNameAsync(request.UserName) as User;
+            User? user = await _userManager.FindByNameAsync(request.UserName);
 
             if (user is null || !await _userManager.CheckPasswordAsync(user, request.Password))
                 throw new AppIGetMoneyUserNotFoundException();

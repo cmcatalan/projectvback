@@ -67,7 +67,7 @@ namespace ProjectVBack.Infrastructure.Repositories
 
             itemToDelete.IsDeleted = true;
             itemToDelete.DeletedAt = DateTime.Now.ToUniversalTime();
-            
+
             _context.Entry(itemToDelete).State = EntityState.Modified;
 
             return row;

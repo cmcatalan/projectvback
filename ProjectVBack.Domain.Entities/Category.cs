@@ -7,9 +7,9 @@ namespace ProjectVBack.Domain.Entities
     {
         [Required]
         public CategoryType Type { get; set; }
-        public string Name { get; set; }
-        public string PictureUrl { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string PictureUrl { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public bool IsDefault { get; set; } = false;
 
         public ICollection<User> Users { get; set; } = new List<User>();

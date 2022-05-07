@@ -12,8 +12,8 @@ namespace ProjectVBack.Application.Services.Configuration
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Transaction, TransactionDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
-            CreateMap<Category , AddCategoryRequest>().ReverseMap();
-            CreateMap<Category , EditCategoryRequest>().ReverseMap();
+            CreateMap<Category, AddCategoryRequest>().ReverseMap();
+            CreateMap<Category, EditCategoryRequest>().ReverseMap();
         }
     }
 }
