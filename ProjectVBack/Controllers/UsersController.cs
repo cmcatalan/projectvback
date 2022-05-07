@@ -31,7 +31,7 @@ namespace ProjectVBack.WebApi.Services.Controllers
                 var userInfo = await _userAppService.GetUserInfoAsync(userId);
 
                 if (userInfo == null)
-                    return NotFound();
+                    throw new AppIGetMoneyUserNotFoundException();
 
                 return Ok(userInfo);
             }
@@ -49,6 +49,9 @@ namespace ProjectVBack.WebApi.Services.Controllers
             var userId = GetUserId();
 
             var isModified = await _userAppService.UpdateUserInfo(request, userId);
+
+            if (isModified == null)
+                throw new AppIGetMoneyUserNotFoundException();
 
             return Ok(isModified);
         }
@@ -68,15 +71,12 @@ namespace ProjectVBack.WebApi.Services.Controllers
             var user = HttpContext.User;
 
             if (user == null)
-                throw new Exception();
+                throw new AppIGetMoneyUserNotFoundException();
 
             var userClaims = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
 
             if (userClaims == null)
-                throw new Exception();
-
-            if (string.IsNullOrEmpty(userClaims.Value))
-                throw new Exception();
+                throw new AppIGetMoneyUserNotFoundException();
 
             return userClaims.Value;
         }

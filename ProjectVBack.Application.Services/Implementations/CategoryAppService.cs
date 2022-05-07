@@ -44,7 +44,7 @@ namespace ProjectVBack.Application.Services
             var category = await _unitOfWork.Categories.GetCategoryWithUsersByIdAsync(categoryId);
 
             if (category == null)
-                throw new AppIGetMoneyException();
+                throw new AppIGetMoneyCategroyNotFoundException();
 
             if (category.Users.Contains(actualUser))
             {
@@ -61,7 +61,7 @@ namespace ProjectVBack.Application.Services
             var categoriesList = await _unitOfWork.Categories.GetAllCategoriesAsync(userId);
 
             if (categoriesList == null)
-                throw new AppIGetMoneyException();
+                throw new AppIGetMoneyCategroyNotFoundException();
 
             var categoriesDtoList = _mapper.Map<IEnumerable<CategoryDto>>(categoriesList);
 
@@ -73,12 +73,12 @@ namespace ProjectVBack.Application.Services
             var categoryToEdit = await _unitOfWork.Categories.GetCategoryWithUsersByIdAsync(request.Id);
 
             if (categoryToEdit == null)
-                throw new AppIGetMoneyException();
+                throw new AppIGetMoneyCategroyNotFoundException();
 
             var actualUser = await _userManager.FindByIdAsync(userId);
 
             if (actualUser == null)
-                throw new AppIGetMoneyException();
+                throw new AppIGetMoneyUserNotFoundException();
 
             if (!categoryToEdit.IsDefault && categoryToEdit.Users.Contains(actualUser))
             {
@@ -104,12 +104,12 @@ namespace ProjectVBack.Application.Services
             var actualUser = await _userManager.FindByIdAsync(userId);
 
             if (actualUser == null)
-                throw new AppIGetMoneyException();
+                throw new AppIGetMoneyUserNotFoundException();
 
             var categoryToDelete = await _unitOfWork.Categories.GetCategoryWithUsersByIdAsync(categoryId);
 
-            if(categoryToDelete == null)
-                throw new AppIGetMoneyException();
+            if (categoryToDelete == null)
+                throw new AppIGetMoneyCategroyNotFoundException();
 
             if(!categoryToDelete.Users.Contains(actualUser))
                 throw new AppIGetMoneyException();
@@ -118,8 +118,8 @@ namespace ProjectVBack.Application.Services
             {
                 var result = actualUser.Categories.Remove(categoryToDelete);
 
-                if(!result)
-                    throw new AppIGetMoneyException();
+                if (!result)
+                    throw new AppIGetMoneyUserNotFoundException();
 
                 _unitOfWork.Complete();
 
@@ -133,7 +133,7 @@ namespace ProjectVBack.Application.Services
                 var categoryDeleted = _unitOfWork.Categories.HardDelete(categoryToDelete);
 
                 if (categoryDeleted == null)
-                    throw new AppIGetMoneyException();
+                    throw new AppIGetMoneyCategroyNotFoundException();
 
                 _unitOfWork.Complete();
 
