@@ -20,19 +20,32 @@ namespace ProjectVBack.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<EditUserRequest> _editUserRequestValidator;
         private readonly IValidator<RegisterRequest> _registerRequestValidator;
+        private readonly IValidator<AuthenticateRequest> _authenticateRequestValidator;
 
         public UserAppService(IConfiguration configuration, UserManager<User> userManager, IUnitOfWork unitOfWork,
-            IValidator<EditUserRequest> editUserRequestvalidator, IValidator<RegisterRequest> registerRequestValidator)
+            IValidator<EditUserRequest> editUserRequestvalidator, IValidator<RegisterRequest> registerRequestValidator,
+            IValidator<AuthenticateRequest> authenticateRequestValidator)
         {
             _configuration = configuration;
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _editUserRequestValidator = editUserRequestvalidator;
             _registerRequestValidator = registerRequestValidator;
+            _authenticateRequestValidator = authenticateRequestValidator;
         }
 
         public async Task<string> LogIn(AuthenticateRequest request)
         {
+            var validationResult = _authenticateRequestValidator.Validate(request);
+
+            if (!validationResult.IsValid)
+            {
+                if (validationResult.Errors.Any())
+                    throw new AppIGetMoneyInvalidUserException(validationResult.Errors[0].ErrorMessage);
+
+                throw new AppIGetMoneyInvalidUserException();
+            }
+
             User? user = await _userManager.FindByNameAsync(request.UserName);
 
             if (user is null || !await _userManager.CheckPasswordAsync(user, request.Password))

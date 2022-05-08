@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using ProjectVBack.Application.Dtos;
 using ProjectVBack.Application.Dtos.CategoryService;
@@ -13,16 +14,32 @@ namespace ProjectVBack.Application.Services
         private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IValidator<EditCategoryRequest> _editCategoryRequestValidator;
+        private readonly IValidator<AddCategoryRequest> _addCategoryRequestValidator;
 
-        public CategoryAppService(IUnitOfWork unitOfWork, UserManager<User> userManager, IMapper mapper)
+        public CategoryAppService(IUnitOfWork unitOfWork, UserManager<User> userManager, IMapper mapper
+            ,IValidator<EditCategoryRequest> editCategoryRequestValidator
+            ,IValidator<AddCategoryRequest> addCategoryRequestValidator)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
             _mapper = mapper;
+            _editCategoryRequestValidator = editCategoryRequestValidator;
+            _addCategoryRequestValidator = addCategoryRequestValidator;
         }
 
         public async Task<CategoryDto> CreateCategoryAsync(AddCategoryRequest request, string userId)
         {
+            var validationResult = _addCategoryRequestValidator.Validate(request);
+
+            if (!validationResult.IsValid)
+            {
+                if (validationResult.Errors.Any())
+                    throw new AppIGetMoneyInvalidCategoryException(validationResult.Errors[0].ErrorMessage);
+
+                throw new AppIGetMoneyInvalidCategoryException();
+            }
+
             var actualUser = await _userManager.FindByIdAsync(userId);
 
             var categoryToAdd = _mapper.Map<Category>(request);
@@ -71,6 +88,16 @@ namespace ProjectVBack.Application.Services
 
         public async Task<CategoryDto> EditCategoryAsync(EditCategoryRequest request, string userId)
         {
+            var validationResult = _editCategoryRequestValidator.Validate(request);
+
+            if (!validationResult.IsValid)
+            {
+                if(validationResult.Errors.Any())
+                    throw new AppIGetMoneyInvalidCategoryException(validationResult.Errors[0].ErrorMessage);
+
+                throw new AppIGetMoneyInvalidCategoryException();
+            }
+
             var categoryToEdit = await _unitOfWork.Categories.GetCategoryWithUsersByIdAsync(request.Id);
 
             if (categoryToEdit == null)

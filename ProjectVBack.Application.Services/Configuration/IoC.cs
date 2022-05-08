@@ -25,6 +25,9 @@ namespace ProjectVBack.Application.Services.Configuration
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IValidator<EditUserRequest>, EditUserRequestValidator>();
             services.AddScoped<IValidator<RegisterRequest>, RegistrerRequestValidator>();
+            services.AddScoped<IValidator<AuthenticateRequest>, AuthenticationRequestValidator>();
+            services.AddScoped<IValidator<EditCategoryRequest>, EditCategoryRequestValidator>();
+            services.AddScoped<IValidator<AddCategoryRequest>, AddCategoryRequestValidator>();
             services.AddDbContext<MoneyAppContext>(opts => opts.UseMySql(connectionString, mySqlServerVersion))
                 .AddIdentityCore<User>()
                 .AddRoles<IdentityRole>()
