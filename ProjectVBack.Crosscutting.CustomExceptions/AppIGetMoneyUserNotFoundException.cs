@@ -5,7 +5,7 @@ namespace ProjectVBack.Crosscutting.CustomExceptions;
 [Serializable]
 public class AppIGetMoneyUserNotFoundException : AppIGetMoneyException
 {
-    public AppIGetMoneyUserNotFoundException() : base() { }
+    public AppIGetMoneyUserNotFoundException() : base("User not found") { }
 
     public AppIGetMoneyUserNotFoundException(string message) : base(message) { }
 

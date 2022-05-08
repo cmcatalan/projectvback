@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectVBack.Application.Dtos;
 using ProjectVBack.Domain.Entities;
 using ProjectVBack.Domain.Repositories.Abstractions;
 using ProjectVBack.Infrastructure.Persistence;
@@ -21,7 +23,8 @@ namespace ProjectVBack.Application.Services.Configuration
             services.AddTransient<ICategoriesRepository, CategoriesRepository>();
             services.AddTransient<ITransactionsRepository, TransactionsRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped<IValidator<EditUserRequest>, EditUserRequestValidator>();
+            services.AddScoped<IValidator<RegisterRequest>, RegistrerRequestValidator>();
             services.AddDbContext<MoneyAppContext>(opts => opts.UseMySql(connectionString, mySqlServerVersion))
                 .AddIdentityCore<User>()
                 .AddRoles<IdentityRole>()
