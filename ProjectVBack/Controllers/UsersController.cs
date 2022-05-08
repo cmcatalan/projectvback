@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectVBack.Application.Dtos;
 using ProjectVBack.Application.Services;
+using ProjectVBack.Crosscutting.CustomExceptions.Expecific;
 using System.Security.Claims;
 
 namespace ProjectVBack.WebApi.Services.Controllers

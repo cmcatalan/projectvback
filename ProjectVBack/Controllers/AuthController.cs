@@ -26,6 +26,9 @@ namespace ProjectVBack.WebApi.Services.Controllers
         {
             var jwt = await _userAppService.LogIn(request);
 
+            if(jwt == null)
+                throw new AppIGetMoneyAuthenticationException();
+
             return Ok(new { AccessToken = jwt });
         }
 

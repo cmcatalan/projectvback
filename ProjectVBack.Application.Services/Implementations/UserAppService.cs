@@ -8,6 +8,7 @@ using ProjectVBack.Crosscutting.CustomExceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ProjectVBack.Crosscutting.CustomExceptions.Expecific;
 
 namespace ProjectVBack.Application.Services
 {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using ProjectVBack.Application.Dtos;
 using ProjectVBack.Domain.Entities;
 using ProjectVBack.Crosscutting.CustomExceptions;
+using ProjectVBack.Crosscutting.CustomExceptions.Expecific;
 
 namespace ProjectVBack.Application.Services
 {

@@ -1,5 +1,6 @@
 ﻿namespace ProjectVBack.Crosscutting.CustomExceptions;
 
+[Serializable]
 public class AppIGetMoneyException : Exception
 {
     public AppIGetMoneyException() : base() { }

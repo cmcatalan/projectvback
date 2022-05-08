@@ -2,10 +2,10 @@
 
 public class AppIGetMoneyAuthenticationException : AppIGetMoneyException
 {
-    public AppIGetMoneyCategroyNotFoundException() : base("Category not found") { }
+    public AppIGetMoneyAuthenticationException() : base("Category not found") { }
 
-    public AppIGetMoneyCategroyNotFoundException(string message) : base(message) { }
+    public AppIGetMoneyAuthenticationException(string message) : base(message) { }
 
-    public AppIGetMoneyCategroyNotFoundException(string message, Exception inner) : base(message, inner) { }
+    public AppIGetMoneyAuthenticationException(string message, Exception inner) : base(message, inner) { }
 }
 
