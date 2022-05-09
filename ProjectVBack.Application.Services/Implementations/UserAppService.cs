@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using FluentValidation;
 using ProjectVBack.Application.Services.Configuration;
+using AutoMapper;
 
 namespace ProjectVBack.Application.Services
 {
@@ -21,10 +22,11 @@ namespace ProjectVBack.Application.Services
         private readonly IValidator<EditUserRequest> _editUserRequestValidator;
         private readonly IValidator<RegisterRequest> _registerRequestValidator;
         private readonly IValidator<AuthenticateRequest> _authenticateRequestValidator;
+        private readonly IMapper _mapper;
 
         public UserAppService(IConfiguration configuration, UserManager<User> userManager, IUnitOfWork unitOfWork,
             IValidator<EditUserRequest> editUserRequestvalidator, IValidator<RegisterRequest> registerRequestValidator,
-            IValidator<AuthenticateRequest> authenticateRequestValidator)
+            IValidator<AuthenticateRequest> authenticateRequestValidator, IMapper mapper)
         {
             _configuration = configuration;
             _userManager = userManager;
@@ -32,6 +34,7 @@ namespace ProjectVBack.Application.Services
             _editUserRequestValidator = editUserRequestvalidator;
             _registerRequestValidator = registerRequestValidator;
             _authenticateRequestValidator = authenticateRequestValidator;
+            _mapper = mapper;
         }
 
         public async Task<string> LogIn(AuthenticateRequest request)
@@ -79,13 +82,13 @@ namespace ProjectVBack.Application.Services
 
         public async Task<UserDto> SignUp(RegisterRequest request)
         {
-            var validationRequest = _registerRequestValidator.Validate(request);
+            var validationResult = _registerRequestValidator.Validate(request);
 
-            if (!validationRequest.IsValid)
+            if (!validationResult.IsValid)
             {
-                if (validationRequest.Errors.Any())
+                if (validationResult.Errors.Any())
                 {
-                    throw new AppIGetMoneyInvalidUserException(validationRequest.Errors[0].ErrorMessage);
+                    throw new AppIGetMoneyInvalidUserException(validationResult.Errors[0].ErrorMessage);
                 }
 
                 throw new AppIGetMoneyInvalidUserException();
@@ -93,13 +96,7 @@ namespace ProjectVBack.Application.Services
 
             var defaultCategories = await _unitOfWork.Categories.GetDefaultCategoriesAsync();
 
-            var newUser = new User
-            {
-                Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                UserName = request.UserName
-            };
+            var newUser = _mapper.Map<User>(request);
 
             newUser.Categories = defaultCategories.ToList();
 
@@ -114,13 +111,7 @@ namespace ProjectVBack.Application.Services
                 if (newUser == null)
                     throw new AppIGetMoneyUserNotFoundException();
 
-                UserDto newUserDto = new UserDto();
-
-                newUserDto.FirstName = newUser.FirstName;
-                newUserDto.LastName = newUser.LastName;
-                newUserDto.UserName = newUser.UserName;
-                newUserDto.Id = newUser.Id;
-                newUserDto.Email = newUser.Email;
+                var newUserDto = _mapper.Map<UserDto>(request);
 
                 return newUserDto;
             }
