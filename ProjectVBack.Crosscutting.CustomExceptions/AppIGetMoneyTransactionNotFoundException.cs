@@ -1,11 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using ProjectVBack.Crosscutting.Utils.Errors;
+using System.Runtime.Serialization;
 
 namespace ProjectVBack.Crosscutting.CustomExceptions;
 
 [Serializable]
 public class AppIGetMoneyTransactionNotFoundException : AppIGetMoneyException
 {
-    public AppIGetMoneyTransactionNotFoundException() : base("Transaction not found") { }
+    public AppIGetMoneyTransactionNotFoundException() : base(ExceptionMessagesTexts.TransactionNotFoundError) { }
 
     public AppIGetMoneyTransactionNotFoundException(string message) : base(message) { }
 

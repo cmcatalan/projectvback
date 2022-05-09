@@ -8,9 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. WebApi Service Layer", "1. WebApi Service Layer", "{07D1A116-3401-40AA-8A46-0CB380876906}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application Layer", "2. Application Layer", "{153CBBF2-77FE-4466-B829-6A85BFC0F54B}"
-	ProjectSection(SolutionItems) = preProject
-		Program.cs = Program.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infrastructure Layer", "4. Infrastructure Layer", "{148A3964-0719-4D21-B070-1E1DE5A9426B}"
 EndProject
@@ -36,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Application.Dt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Domain.Repositories.Abstractions", "..\ProjectVBack.Domain.Repositories.Abstractions\ProjectVBack.Domain.Repositories.Abstractions.csproj", "{DB86E755-4FD4-4835-AA76-A7AE7FF0585F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Crosscutting.CustomExceptions", "..\ProjectVBack.Crosscutting.CustomExceptions\ProjectVBack.Crosscutting.CustomExceptions.csproj", "{E27B483D-17AA-476A-BAC7-2CAD588298D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Crosscutting.CustomExceptions", "..\ProjectVBack.Crosscutting.CustomExceptions\ProjectVBack.Crosscutting.CustomExceptions.csproj", "{E27B483D-17AA-476A-BAC7-2CAD588298D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

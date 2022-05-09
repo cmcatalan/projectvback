@@ -1,11 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using ProjectVBack.Crosscutting.Utils.Errors;
+using System.Runtime.Serialization;
 
 namespace ProjectVBack.Crosscutting.CustomExceptions;
 
 [Serializable]
 public class AppIGetMoneyCategoryCreationException : AppIGetMoneyException
 {
-    public AppIGetMoneyCategoryCreationException() : base("Category can't be created") { }
+    public AppIGetMoneyCategoryCreationException() : base(ExceptionMessagesTexts.CategoryCreateError) { }
 
     public AppIGetMoneyCategoryCreationException(string message) : base(message) { }
 

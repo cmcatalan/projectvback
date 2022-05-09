@@ -8,6 +8,8 @@ using ProjectVBack.Domain.Repositories.Abstractions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using FluentValidation;
+using ProjectVBack.Application.Services.Configuration;
 
 namespace ProjectVBack.Application.Services
 {
@@ -16,15 +18,34 @@ namespace ProjectVBack.Application.Services
         private readonly IConfiguration _configuration;
         private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork _unitOfWork;
-        public UserAppService(IConfiguration configuration, UserManager<User> userManager, IUnitOfWork unitOfWork)
+        private readonly IValidator<EditUserRequest> _editUserRequestValidator;
+        private readonly IValidator<RegisterRequest> _registerRequestValidator;
+        private readonly IValidator<AuthenticateRequest> _authenticateRequestValidator;
+
+        public UserAppService(IConfiguration configuration, UserManager<User> userManager, IUnitOfWork unitOfWork,
+            IValidator<EditUserRequest> editUserRequestvalidator, IValidator<RegisterRequest> registerRequestValidator,
+            IValidator<AuthenticateRequest> authenticateRequestValidator)
         {
             _configuration = configuration;
             _userManager = userManager;
             _unitOfWork = unitOfWork;
+            _editUserRequestValidator = editUserRequestvalidator;
+            _registerRequestValidator = registerRequestValidator;
+            _authenticateRequestValidator = authenticateRequestValidator;
         }
 
         public async Task<string> LogIn(AuthenticateRequest request)
         {
+            var validationResult = _authenticateRequestValidator.Validate(request);
+
+            if (!validationResult.IsValid)
+            {
+                if (validationResult.Errors.Any())
+                    throw new AppIGetMoneyInvalidUserException(validationResult.Errors[0].ErrorMessage);
+
+                throw new AppIGetMoneyInvalidUserException();
+            }
+
             User? user = await _userManager.FindByNameAsync(request.UserName);
 
             if (user is null || !await _userManager.CheckPasswordAsync(user, request.Password))
@@ -58,6 +79,18 @@ namespace ProjectVBack.Application.Services
 
         public async Task<UserDto> SignUp(RegisterRequest request)
         {
+            var validationRequest = _registerRequestValidator.Validate(request);
+
+            if (!validationRequest.IsValid)
+            {
+                if (validationRequest.Errors.Any())
+                {
+                    throw new AppIGetMoneyInvalidUserException(validationRequest.Errors[0].ErrorMessage);
+                }
+
+                throw new AppIGetMoneyInvalidUserException();
+            }
+
             var defaultCategories = await _unitOfWork.Categories.GetDefaultCategoriesAsync();
 
             var newUser = new User
@@ -115,6 +148,16 @@ namespace ProjectVBack.Application.Services
 
         public async Task<UserDto> UpdateUserInfo(EditUserRequest request, string id)
         {
+            var validationResult = _editUserRequestValidator.Validate(request);
+
+            if (!validationResult.IsValid)
+            {
+                if(validationResult.Errors.Any())
+                    throw new AppIGetMoneyInvalidUserException(validationResult.Errors[0].ErrorMessage);
+
+                throw new AppIGetMoneyInvalidUserException();
+            }
+                
             var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
