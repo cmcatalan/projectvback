@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using ProjectVBack.Application.Dtos;
 using ProjectVBack.Crosscutting.CustomExceptions;
 using ProjectVBack.Crosscutting.Utils;
@@ -11,12 +12,19 @@ public class TransactionAppService : ITransactionAppService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IValidator<AddTransactionRequest> _addTransactionValidator;
+    private readonly IValidator<EditTransactionRequest> _editTransactionValidator;
     private const int SummaryRound = 2;
 
-    public TransactionAppService(IUnitOfWork unitOfWork, IMapper mapper)
+
+    public TransactionAppService(IUnitOfWork unitOfWork, IMapper mapper
+        ,IValidator<AddTransactionRequest> addTransactionRequestValidator
+        ,IValidator<EditTransactionRequest> editTransactionRequestValidator)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _addTransactionValidator = addTransactionRequestValidator;
+        _editTransactionValidator = editTransactionRequestValidator;
     }
 
     public async Task<IEnumerable<TransactionCategoryDto>> GetAllTransactionsWithCategoryInfo(string userId, GetTransactionsRequest dto)
@@ -115,6 +123,18 @@ public class TransactionAppService : ITransactionAppService
 
     public async Task<TransactionDto> Add(string userId, AddTransactionRequest dto)
     {
+        var validationResult = _addTransactionValidator.Validate(dto);
+
+        if (!validationResult.IsValid)
+        {
+            if (validationResult.Errors.Any())
+            {
+                throw new AppIGetMoneyInvalidTransactionException(validationResult.Errors[0].ErrorMessage);
+            }
+
+            throw new AppIGetMoneyInvalidTransactionException();
+        }
+
         var transaction = _mapper.Map<Transaction>(dto);
 
         var category = await _unitOfWork.Categories.GetCategoryWithUsersByIdAsync(dto.CategoryId);
@@ -138,6 +158,18 @@ public class TransactionAppService : ITransactionAppService
 
     public async Task<TransactionDto> Edit(string userId, EditTransactionRequest dto)
     {
+        var validationResult = _editTransactionValidator.Validate(dto);
+
+        if (!validationResult.IsValid)
+        {
+            if (validationResult.Errors.Any())
+            {
+                throw new AppIGetMoneyInvalidTransactionException(validationResult.Errors[0].ErrorMessage);
+            }
+
+            throw new AppIGetMoneyInvalidTransactionException();
+        }
+
         var transaction = await _unitOfWork.Transactions.GetAsync(dto.Id);
 
         if (transaction == null) throw new AppIGetMoneyException();
