@@ -61,6 +61,33 @@ namespace ProjectVBack.Crosscutting.Utils.Errors {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a .
+        /// </summary>
+        public static string CategoryIdEmptyError {
+            get {
+                return ResourceManager.GetString("CategoryIdEmptyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Date can&apos;t be empty.
+        /// </summary>
+        public static string DateEmptyError {
+            get {
+                return ResourceManager.GetString("DateEmptyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Date must be from the past.
+        /// </summary>
+        public static string DateValidError {
+            get {
+                return ResourceManager.GetString("DateValidError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Description must have between 1 and 200 characters.
         /// </summary>
         public static string DescriptionLengthError {
@@ -93,6 +120,15 @@ namespace ProjectVBack.Crosscutting.Utils.Errors {
         public static string EmailLengthError {
             get {
                 return ResourceManager.GetString("EmailLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Id can&apos;t be empty.
+        /// </summary>
+        public static string IdEmptyError {
+            get {
+                return ResourceManager.GetString("IdEmptyError", resourceCulture);
             }
         }
         
@@ -210,6 +246,24 @@ namespace ProjectVBack.Crosscutting.Utils.Errors {
         public static string UserNameLengthError {
             get {
                 return ResourceManager.GetString("UserNameLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Value can&apos;t be empty.
+        /// </summary>
+        public static string ValueEmptyError {
+            get {
+                return ResourceManager.GetString("ValueEmptyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Value must be less than 10 millions.
+        /// </summary>
+        public static string ValueMaxValError {
+            get {
+                return ResourceManager.GetString("ValueMaxValError", resourceCulture);
             }
         }
     }

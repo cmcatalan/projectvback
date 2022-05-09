@@ -106,6 +106,15 @@ namespace ProjectVBack.Crosscutting.Utils.Errors {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invalid transaction.
+        /// </summary>
+        public static string InvalidTransactionError {
+            get {
+                return ResourceManager.GetString("InvalidTransactionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Invalid user.
         /// </summary>
         public static string InvalidUserError {
