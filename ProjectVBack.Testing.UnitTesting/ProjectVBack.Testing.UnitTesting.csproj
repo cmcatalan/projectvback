@@ -11,9 +11,16 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Moq" Version="4.17.2" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectVBack.Application.Services\ProjectVBack.Application.Services.csproj" />
+    <ProjectReference Include="..\ProjectVBack.Domain.Entities\ProjectVBack.Domain.Entities.csproj" />
+    <ProjectReference Include="..\ProjectVBack.Domain.Repositories.Abstractions\ProjectVBack.Domain.Repositories.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

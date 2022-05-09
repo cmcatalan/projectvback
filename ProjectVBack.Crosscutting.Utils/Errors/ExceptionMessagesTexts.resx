@@ -132,6 +132,9 @@
   <data name="InvalidCategoryError" xml:space="preserve">
     <value>Invalid category</value>
   </data>
+  <data name="InvalidTransactionError" xml:space="preserve">
+    <value>Invalid transaction</value>
+  </data>
   <data name="InvalidUserError" xml:space="preserve">
     <value>Invalid user</value>
     <comment>Generic message for users errors</comment>

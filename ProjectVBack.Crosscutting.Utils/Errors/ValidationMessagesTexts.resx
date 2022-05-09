@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CategoryIdEmptyError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DateEmptyError" xml:space="preserve">
+    <value>Date can't be empty</value>
+  </data>
+  <data name="DateValidError" xml:space="preserve">
+    <value>Date must be from the past</value>
+  </data>
   <data name="DescriptionLengthError" xml:space="preserve">
     <value>Description must have between 1 and 200 characters</value>
   </data>
@@ -128,6 +137,9 @@
   </data>
   <data name="EmailLengthError" xml:space="preserve">
     <value>Email must have between 1 and 75 characters</value>
+  </data>
+  <data name="IdEmptyError" xml:space="preserve">
+    <value>Id can't be empty</value>
   </data>
   <data name="LastNameEmptyError" xml:space="preserve">
     <value>Last name can't be empty</value>
@@ -167,5 +179,11 @@
   </data>
   <data name="UserNameLengthError" xml:space="preserve">
     <value>Username must have between 1 and 50 characters</value>
+  </data>
+  <data name="ValueEmptyError" xml:space="preserve">
+    <value>Value can't be empty</value>
+  </data>
+  <data name="ValueMaxValError" xml:space="preserve">
+    <value>Value must be less than 10 millions</value>
   </data>
 </root>
