@@ -1,11 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using ProjectVBack.Crosscutting.Utils.Errors;
+using System.Runtime.Serialization;
 
 namespace ProjectVBack.Crosscutting.CustomExceptions;
 
 [Serializable]
 public class AppIGetMoneyUserNotFoundException : AppIGetMoneyException
 {
-    public AppIGetMoneyUserNotFoundException() : base("User not found") { }
+    public AppIGetMoneyUserNotFoundException() : base(ExceptionMessagesTexts.UserNotFoundError) { }
 
     public AppIGetMoneyUserNotFoundException(string message) : base(message) { }
 

@@ -1,11 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using ProjectVBack.Crosscutting.Utils.Errors;
+using System.Runtime.Serialization;
 
 namespace ProjectVBack.Crosscutting.CustomExceptions;
 
 [Serializable]
 public class AppIGetMoneyAuthenticationException : AppIGetMoneyException
 {
-    public AppIGetMoneyAuthenticationException() : base() { }
+    public AppIGetMoneyAuthenticationException() : base(ExceptionMessagesTexts.AuthenticateError) { }
 
     public AppIGetMoneyAuthenticationException(string message) : base(message) { }
 

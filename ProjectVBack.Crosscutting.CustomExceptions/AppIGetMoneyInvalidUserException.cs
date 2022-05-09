@@ -1,11 +1,14 @@
-﻿using System.Runtime.Serialization;
+﻿using ProjectVBack.Crosscutting.Utils.Errors;
+using System.Runtime.Serialization;
 
 namespace ProjectVBack.Crosscutting.CustomExceptions;
+
+
 
 [Serializable]
 public class AppIGetMoneyInvalidUserException : AppIGetMoneyException
 {
-    public AppIGetMoneyInvalidUserException() : base("Invalid user") { }
+    public AppIGetMoneyInvalidUserException() : base(ExceptionMessagesTexts.InvalidUserError) { }
 
     public AppIGetMoneyInvalidUserException(string message) : base(message) { }
 

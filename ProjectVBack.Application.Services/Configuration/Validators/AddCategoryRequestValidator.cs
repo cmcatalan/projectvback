@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using ProjectVBack.Application.Dtos;
+using ProjectVBack.Crosscutting.Utils.Errors;
 
 namespace ProjectVBack.Application.Services.Configuration
 {
@@ -8,12 +9,12 @@ namespace ProjectVBack.Application.Services.Configuration
         public AddCategoryRequestValidator()
         {
             RuleFor(AddCategoryRequest => AddCategoryRequest.Name)
-                .NotEmpty().WithMessage("El nombre no puede estar vacío")
-                .Length(1,50).WithMessage("El nombre debe tener mas de 1 y menos de 50 caracteres");
+                .NotEmpty().WithMessage(ValidationMessagesTexts.NameEmptyError)
+                .Length(1,50).WithMessage(ValidationMessagesTexts.NameLengthError);
             RuleFor(AddCategoryRequest => AddCategoryRequest.PictureUrl)
-                .NotEmpty().WithMessage("Debe seleccionar una imagen");
+                .NotEmpty().WithMessage(ValidationMessagesTexts.PictureNonSelectedError);
             RuleFor(AddCategoryRequest => AddCategoryRequest.Description)
-                .Length(1, 200).WithMessage("La descripción debe tener más de 1 y menos de 200 caracteres");
+                .Length(1, 200).WithMessage(ValidationMessagesTexts.DescriptionLengthError);
         }
     }
 }

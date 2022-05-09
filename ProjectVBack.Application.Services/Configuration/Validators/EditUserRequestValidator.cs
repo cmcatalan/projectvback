@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using ProjectVBack.Application.Dtos;
+using ProjectVBack.Crosscutting.Utils.Errors;
 
 namespace ProjectVBack.Application.Services.Configuration
 {
@@ -8,15 +9,17 @@ namespace ProjectVBack.Application.Services.Configuration
         public EditUserRequestValidator()
         {
             RuleFor(EditUserRequest => EditUserRequest.FirstName)
-                .NotEmpty().WithMessage("El nombre no puede estar vacío")
-                .Length(1,50).WithMessage("El nombre debe tener mas de 1 y menos de 50 caracteres");
+                .NotEmpty().WithMessage(ValidationMessagesTexts.NameEmptyError)
+                .Length(1,50).WithMessage(ValidationMessagesTexts.NameLengthError);
             RuleFor(EditUserRequest => EditUserRequest.LastName)
-                .NotEmpty().WithMessage("El apellido no puede estar vacío")
-                .Length(1,50).WithMessage("El apellido debe tener mas de 1 y menos de 50 caracteres");
+                .NotEmpty().WithMessage(ValidationMessagesTexts.LastNameEmptyError)
+                .Length(1,50).WithMessage(ValidationMessagesTexts.LastNameLengthError);
             RuleFor(EditUserRequest => EditUserRequest.OldPassword)
-                .NotEmpty().WithMessage("La antigua contraseña no puede estar vacia");
+                .NotEmpty().WithMessage(ValidationMessagesTexts.OldPasswordEmptyError)
+                .Length(1, 50).WithMessage(ValidationMessagesTexts.OldPasswordLengthError);
             RuleFor(EditUserRequest => EditUserRequest.NewPassword)
-                .NotEmpty().WithMessage("La nueva contraseña no puede estar vacia");
+                .NotEmpty().WithMessage(ValidationMessagesTexts.NewPasswordEmptyError)
+                .Length(1, 50).WithMessage(ValidationMessagesTexts.NewPasswordLengthError);
         }
     }
 }

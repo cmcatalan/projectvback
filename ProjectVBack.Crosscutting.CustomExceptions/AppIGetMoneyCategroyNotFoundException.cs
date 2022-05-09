@@ -1,11 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using ProjectVBack.Crosscutting.Utils.Errors;
+using System.Runtime.Serialization;
 
 namespace ProjectVBack.Crosscutting.CustomExceptions;
 
 [Serializable]
 public class AppIGetMoneyCategroyNotFoundException : AppIGetMoneyException
 {
-    public AppIGetMoneyCategroyNotFoundException() : base("Category not found") { }
+    public AppIGetMoneyCategroyNotFoundException() : base(ExceptionMessagesTexts.CategoryNotFoundError) { }
 
     public AppIGetMoneyCategroyNotFoundException(string message) : base(message) { }
 

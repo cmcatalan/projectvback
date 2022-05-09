@@ -1,11 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using ProjectVBack.Crosscutting.Utils.Errors;
+using System.Runtime.Serialization;
 
 namespace ProjectVBack.Crosscutting.CustomExceptions;
 
 [Serializable]
 public class AppIGetMoneyInvalidCategoryException : AppIGetMoneyException
 {
-    public AppIGetMoneyInvalidCategoryException() : base("Invalid category") { }
+    public AppIGetMoneyInvalidCategoryException() : base(ExceptionMessagesTexts.InvalidCategoryError) { }
 
     public AppIGetMoneyInvalidCategoryException(string message) : base(message) { }
 

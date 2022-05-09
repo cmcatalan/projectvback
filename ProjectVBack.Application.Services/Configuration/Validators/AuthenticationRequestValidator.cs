@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using ProjectVBack.Application.Dtos;
+using ProjectVBack.Crosscutting.Utils.Errors;
 
 namespace ProjectVBack.Application.Services.Configuration
 {
@@ -8,11 +9,11 @@ namespace ProjectVBack.Application.Services.Configuration
         public AuthenticationRequestValidator()
         {
             RuleFor(AuthenticateRequest => AuthenticateRequest.UserName)
-                .NotEmpty().WithMessage("El nombre no puede estar vacío")
-                .Length(1,50).WithMessage("El nombre debe tener mas de 1 y menos de 50 caracteres");
+                .NotEmpty().WithMessage(ValidationMessagesTexts.NameEmptyError)
+                .Length(1,50).WithMessage(ValidationMessagesTexts.NameLengthError);
             RuleFor(AuthenticateRequest => AuthenticateRequest.Password)
-                .NotEmpty().WithMessage("La contraseña no puede estar vacía")
-                .Length(1,50).WithMessage("La contraseña debe tener mas de 1 y menos de 50 caracteres");
+                .NotEmpty().WithMessage(ValidationMessagesTexts.PasswordEmptyError)
+                .Length(1,50).WithMessage(ValidationMessagesTexts.PasswordLengthError);
         }
     }
 }
