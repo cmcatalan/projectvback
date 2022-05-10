@@ -123,7 +123,7 @@ public class TransactionAppService : ITransactionAppService
 
     public async Task<TransactionDto> Add(string userId, AddTransactionRequest dto)
     {
-        var validationResult = _addTransactionValidator.Validate(dto);
+        var validationResult = await _addTransactionValidator.ValidateAsync(dto);
 
         if (!validationResult.IsValid)
         {
@@ -158,7 +158,7 @@ public class TransactionAppService : ITransactionAppService
 
     public async Task<TransactionDto> Edit(string userId, EditTransactionRequest dto)
     {
-        var validationResult = _editTransactionValidator.Validate(dto);
+        var validationResult = await _editTransactionValidator.ValidateAsync(dto);
 
         if (!validationResult.IsValid)
         {

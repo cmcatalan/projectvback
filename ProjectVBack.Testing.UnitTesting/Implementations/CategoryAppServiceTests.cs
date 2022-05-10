@@ -15,6 +15,7 @@ using ProjectVBack.Application.Dtos;
 using System.Security.Claims;
 using ProjectVBack.Application.Dtos.CategoryService;
 using ProjectVBack.Crosscutting.Utils;
+using ProjectVBack.Crosscutting.CustomExceptions;
 
 namespace ProjectVBack.Application.Services.Tests
 {
@@ -127,6 +128,18 @@ namespace ProjectVBack.Application.Services.Tests
             Assert.IsNotNull(result);
 
             Assert.IsInstanceOfType(result , typeof(CategoryDto));
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(AppIGetMoneyInvalidUserException))]
+        public void CreateCategoryAsyncTest_BadPath()
+        {
+            
+
+            var categoryAppService = new CategoryAppService(_unitOfWorkMock.Object, _userManagerMock.Object, _mapperMock.Object,
+                _editCategoryRequestValidatorMock.Object, _addCategoryRequestValidatorMock.Object);
+
+            var result = categoryAppService.CreateCategoryAsync(new AddCategoryRequest("Esports", "Antonio", "AntonioLopez", CategoryType.Expense), "vbnmkl").Result;
         }
 
         [TestMethod()]
