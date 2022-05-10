@@ -13,9 +13,9 @@ namespace ProjectVBack.Application.Services.Configuration
 {
     public static class IoC
     {
-        public static IServiceCollection AddDependency(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddDependency(this IServiceCollection services)
         {
-            var connectionString = configuration["ConnectionString:DefaultConnection"];
+            var connectionString = Environment.GetEnvironmentVariable("ConnectionString");
             var mySqlServerVersion = new MySqlServerVersion(new Version(8, 0, 23));
 
             services.AddAutoMapper(typeof(GlobalAppProfile));
