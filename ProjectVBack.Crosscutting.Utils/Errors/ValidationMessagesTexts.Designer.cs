@@ -61,7 +61,7 @@ namespace ProjectVBack.Crosscutting.Utils.Errors {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a .
+        ///   Busca una cadena traducida similar a CategoryId can&apos;t be empty.
         /// </summary>
         public static string CategoryIdEmptyError {
             get {

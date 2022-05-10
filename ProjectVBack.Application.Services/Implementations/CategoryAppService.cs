@@ -30,7 +30,7 @@ namespace ProjectVBack.Application.Services
 
         public async Task<CategoryDto> CreateCategoryAsync(AddCategoryRequest request, string userId)
         {
-            var validationResult = _addCategoryRequestValidator.Validate(request);
+            var validationResult = await _addCategoryRequestValidator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
@@ -41,6 +41,9 @@ namespace ProjectVBack.Application.Services
             }
 
             var actualUser = await _userManager.FindByIdAsync(userId);
+
+            if(actualUser == null)
+                throw new AppIGetMoneyUserNotFoundException();
 
             var categoryToAdd = _mapper.Map<Category>(request);
 
@@ -88,7 +91,7 @@ namespace ProjectVBack.Application.Services
 
         public async Task<CategoryDto> EditCategoryAsync(EditCategoryRequest request, string userId)
         {
-            var validationResult = _editCategoryRequestValidator.Validate(request);
+            var validationResult = await _editCategoryRequestValidator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
