@@ -66,11 +66,15 @@ namespace ProjectVBack.Application.Services
             foreach (var role in roles)
                 claims.Add(new Claim(ClaimTypes.Role, role));
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var jwtIssuer = Environment.GetEnvironmentVariable("JwtIssuer");
+            var jwtAudience = Environment.GetEnvironmentVariable("JwtAudience");
+            var jwtKey = Environment.GetEnvironmentVariable("JwtKey");
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
             var tokenDescriptor = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
+                issuer: jwtIssuer,
+                audience: jwtAudience,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(720),
                 signingCredentials: credentials);

@@ -14,13 +14,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDependency(builder.Configuration);
+builder.Services.AddDependency();
 
 builder.Services.AddHealthChecks();
 builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 builder.Services.AddTransient<IUserAppService, UserAppService>();
 builder.Services.AddTransient<ICategoryAppService, CategoryAppService>();
 builder.Services.AddTransient<ITransactionAppService, TransactionAppService>();
+
+var jwtIssuer = Environment.GetEnvironmentVariable("JwtIssuer");
+var jwtAudience = Environment.GetEnvironmentVariable("JwtAudience");
+var jwtKey = Environment.GetEnvironmentVariable("JwtKey");
+
 builder.Services
     .AddHttpContextAccessor()
     .AddAuthorization()
@@ -33,9 +38,9 @@ builder.Services
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
     });
 

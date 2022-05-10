@@ -14,7 +14,11 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JwtIssuer": "IGetMoney",
+        "JwtAudience": "https://localhost:7162",
+        "JwtKey": "kPc%Ezcy@5nDkPc%Ezcy@5nD",
+        "ConnectionString": "Server=localhost;Database=IGetMoney;Uid=root;Pwd=my-secret-pw;"
       },
       "applicationUrl": "https://localhost:7162;http://localhost:5162",
       "dotnetRunMessages": true
