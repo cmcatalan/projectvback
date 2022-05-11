@@ -73,8 +73,10 @@ namespace ProjectVBack.Application.Services.Tests
         [TestMethod()]
         public async Task Create_Category_Async_Test_Happy_Path()
         {
-            _unitOfWorkMock.Setup(f => f.Categories.AddAsync(It.IsAny<Category>())).Returns(Task.FromResult(FixtureDataCategory.category));
-            _userManagerMock.Setup(f => f.FindByIdAsync(FixtureDataCategory.userId)).Returns(Task.FromResult(FixtureDataCategory.user));
+            _unitOfWorkMock.Setup(f => f.Categories.AddAsync(It.IsAny<Category>()))
+                .Returns(Task.FromResult(FixtureDataCategory.category));
+            _userManagerMock.Setup(f => f.FindByIdAsync(FixtureDataCategory.userId))
+                .Returns(Task.FromResult(FixtureDataCategory.user));
 
             var categoryAppService = new CategoryAppService(_unitOfWorkMock.Object, _userManagerMock.Object, _mapperMock.Object,
                 _editCategoryRequestValidatorMock.Object, _addCategoryRequestValidatorMock.Object);
@@ -202,9 +204,75 @@ namespace ProjectVBack.Application.Services.Tests
         }
 
         [TestMethod()]
-        public void DeleteCategoryAsyncTest()
+        [ExpectedException(typeof(AppIGetMoneyUserNotFoundException))]
+        public async Task Edit_Category_Async_Test_BadPath_User_Not_Found_Category()
         {
-            Assert.Fail();
+            Category categoryTest = new Category()
+            {
+                Type = CategoryType.Expense,
+                Name = "Travelling",
+                PictureUrl = "thispictureUrl",
+                Description = "This category is for the traveling expended money",
+                IsDefault = false,
+                Users = new List<User>(),
+                Transactions = new List<Transaction>(),
+            };
+
+            _unitOfWorkMock.Setup(f => f.Categories.GetCategoryWithUsersByIdAsync(FixtureDataCategory.categoryId))
+                .Returns(Task.FromResult((Category?)categoryTest));
+            _unitOfWorkMock.Setup(f => f.Categories.UpdateAsync(FixtureDataCategory.category))
+                .Returns(Task.FromResult((Category?)FixtureDataCategory.category));
+
+            var categoryAppService = new CategoryAppService(_unitOfWorkMock.Object, _userManagerMock.Object, _mapperMock.Object,
+                _editCategoryRequestValidatorMock.Object, _addCategoryRequestValidatorMock.Object);
+
+            await categoryAppService.EditCategoryAsync(FixtureDataCategory.editCategoryRequest, FixtureDataCategory.userId);
+        }
+
+        [TestMethod()]
+        public async Task Delete_Category_Async_Test_HappyPath_If_Default_Category()
+        {
+            User userTest = new User();
+
+            Category categoryTest = new Category()
+            {
+                Type = CategoryType.Expense,
+                Name = "Travelling",
+                PictureUrl = "thispictureUrl",
+                Description = "This category is for the traveling expended money",
+                IsDefault = true,
+                Users = new List<User>()
+                {
+                    userTest
+                },
+                Transactions = new List<Transaction>(),
+            };
+
+            userTest.FirstName = "Guillermo";
+            userTest.LastName = "Cuenca";
+            userTest.Categories = new List<Category>()
+            {
+                categoryTest
+            };
+            userTest.Transactions = new List<Transaction>();
+
+            _unitOfWorkMock.Setup(f => f.Categories.GetCategoryWithUsersByIdAsync(FixtureDataCategory.categoryId))
+                .Returns(Task.FromResult((Category?)categoryTest));
+            _userManagerMock.Setup(f => f.FindByIdAsync(FixtureDataCategory.userId))
+                .Returns(Task.FromResult(userTest));
+
+            var categoryAppService = new CategoryAppService(_unitOfWorkMock.Object, _userManagerMock.Object, _mapperMock.Object,
+                _editCategoryRequestValidatorMock.Object, _addCategoryRequestValidatorMock.Object);
+
+            var result = await categoryAppService.DeleteCategoryAsync(FixtureDataCategory.categoryId , FixtureDataCategory.userId);
+
+            Assert.IsNotNull(result);
+
+            Assert.IsInstanceOfType(result, typeof(CategoryDto));
+
+            _unitOfWorkMock.Verify(f => f.Categories.GetCategoryWithUsersByIdAsync(FixtureDataCategory.categoryId), Times.Once);
+            _userManagerMock.Verify(f => f.FindByIdAsync(FixtureDataCategory.userId), Times.Once);
+            _mapperMock.Verify(f => f.Map<CategoryDto>(It.IsAny<Category>()), Times.Once);
         }
     }
 }

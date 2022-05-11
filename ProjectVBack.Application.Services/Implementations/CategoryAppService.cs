@@ -175,7 +175,6 @@ namespace ProjectVBack.Application.Services
 
                 return categoryDeletedDto;
             }
-
         }
     }
 }
