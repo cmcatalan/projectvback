@@ -126,6 +126,9 @@ namespace ProjectVBack.Application.Services
 
                 return categoryEditedDto;
             }
+            
+            if(categoryToEdit.IsDefault)
+                throw new AppIGetMoneyCategoryDefaultException();
 
             throw new AppIGetMoneyException();
         }
