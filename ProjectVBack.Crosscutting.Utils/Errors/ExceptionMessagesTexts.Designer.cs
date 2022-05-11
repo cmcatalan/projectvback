@@ -88,6 +88,15 @@ namespace ProjectVBack.Crosscutting.Utils.Errors {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You can&apos;t edit a default category.
+        /// </summary>
+        public static string CategoryDefault {
+            get {
+                return ResourceManager.GetString("CategoryDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Category not found.
         /// </summary>
         public static string CategoryNotFoundError {

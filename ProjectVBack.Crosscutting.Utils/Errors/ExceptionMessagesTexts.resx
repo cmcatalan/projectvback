@@ -126,6 +126,9 @@
   <data name="CategoryCreatingError" xml:space="preserve">
     <value>Category can't be created</value>
   </data>
+  <data name="CategoryDefault" xml:space="preserve">
+    <value>You can't edit a default category</value>
+  </data>
   <data name="CategoryNotFoundError" xml:space="preserve">
     <value>Category not found</value>
   </data>

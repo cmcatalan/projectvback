@@ -126,8 +126,11 @@ namespace ProjectVBack.Application.Services
 
                 return categoryEditedDto;
             }
+            
+            if(categoryToEdit.IsDefault)
+                throw new AppIGetMoneyCategoryDefaultException();
 
-            throw new AppIGetMoneyException();
+            throw new AppIGetMoneyInvalidUserException();
         }
 
         public async Task<CategoryDto> DeleteCategoryAsync(int categoryId, string userId)
@@ -143,7 +146,7 @@ namespace ProjectVBack.Application.Services
                 throw new AppIGetMoneyCategroyNotFoundException();
 
             if (!categoryToDelete.Users.Contains(actualUser))
-                throw new AppIGetMoneyException();
+                throw new AppIGetMoneyInvalidCategoryException();
 
             if (categoryToDelete.IsDefault)
             {
@@ -154,9 +157,9 @@ namespace ProjectVBack.Application.Services
 
                 _unitOfWork.Complete();
 
-                var categoryDeleted = _mapper.Map<CategoryDto>(categoryToDelete);
+                var categoryDeletedDto = _mapper.Map<CategoryDto>(categoryToDelete);
 
-                return categoryDeleted;
+                return categoryDeletedDto;
             }
 
             else
@@ -172,7 +175,6 @@ namespace ProjectVBack.Application.Services
 
                 return categoryDeletedDto;
             }
-
         }
     }
 }
