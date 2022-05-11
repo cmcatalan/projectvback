@@ -130,7 +130,7 @@ namespace ProjectVBack.Application.Services
             if(categoryToEdit.IsDefault)
                 throw new AppIGetMoneyCategoryDefaultException();
 
-            throw new AppIGetMoneyException();
+            throw new AppIGetMoneyInvalidUserException();
         }
 
         public async Task<CategoryDto> DeleteCategoryAsync(int categoryId, string userId)

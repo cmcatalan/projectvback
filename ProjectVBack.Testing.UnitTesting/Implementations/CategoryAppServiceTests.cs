@@ -144,7 +144,7 @@ namespace ProjectVBack.Application.Services.Tests
 
         [TestMethod]
         [ExpectedException(typeof(AppIGetMoneyCategoryDefaultException))]
-        public async Task Edit_Category_Async_Test_Bad_Path_Category_Is_Default()
+        public async Task Edit_Category_Async_Test_BadPath_Category_Is_Default()
         {
             Category categoryTest = new Category()
             {
@@ -157,6 +157,34 @@ namespace ProjectVBack.Application.Services.Tests
                 {
                     FixtureDataCategory.user
                 },
+                Transactions = new List<Transaction>(),
+            };
+
+            _unitOfWorkMock.Setup(f => f.Categories.GetCategoryWithUsersByIdAsync(FixtureDataCategory.categoryId))
+                .Returns(Task.FromResult((Category?)categoryTest));
+            _unitOfWorkMock.Setup(f => f.Categories.UpdateAsync(FixtureDataCategory.category))
+                .Returns(Task.FromResult((Category?)FixtureDataCategory.category));
+            _userManagerMock.Setup(f => f.FindByIdAsync(FixtureDataCategory.userId))
+                .Returns(Task.FromResult(FixtureDataCategory.user));
+
+            var categoryAppService = new CategoryAppService(_unitOfWorkMock.Object, _userManagerMock.Object, _mapperMock.Object,
+                _editCategoryRequestValidatorMock.Object, _addCategoryRequestValidatorMock.Object);
+
+            await categoryAppService.EditCategoryAsync(FixtureDataCategory.editCategoryRequest, FixtureDataCategory.userId);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(AppIGetMoneyInvalidUserException))]
+        public async Task Edit_Category_Async_Test_BadPath_User_Doesnt_Contain_Category()
+        {
+            Category categoryTest = new Category()
+            {
+                Type = CategoryType.Expense,
+                Name = "Travelling",
+                PictureUrl = "thispictureUrl",
+                Description = "This category is for the traveling expended money",
+                IsDefault = false,
+                Users = new List<User>(),
                 Transactions = new List<Transaction>(),
             };
 
