@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 public static class FixtureDataCategory
 {
-    public static string userId = "1";
-    public static int categoryId = 1;
+    public static string UserId = "1";
+    public static int CategoryId = 1;
 
-    public static Category category = new Category
+    public static Category Category = new Category
     {
         Type = CategoryType.Expense,
         Name = "Travelling",
@@ -20,7 +20,7 @@ public static class FixtureDataCategory
         Transactions = new List<Transaction>(),
     };
 
-    public static CategoryDto categoryDto = new CategoryDto
+    public static CategoryDto CategoryDto = new CategoryDto
     {
         Type = CategoryType.Expense,
         Name = "Travelling",
@@ -30,7 +30,7 @@ public static class FixtureDataCategory
         Id = 5
     };
 
-    public static User user = new User
+    public static User User = new User
     {
         FirstName = "Guillermo",
         LastName = "Cuenca",
@@ -38,13 +38,15 @@ public static class FixtureDataCategory
         Transactions = new List<Transaction>()
     };
 
-    public static AddCategoryRequest addCategoryRequest = new AddCategoryRequest("Travelling", "thispictureUrl",
+    public static AddCategoryRequest AddCategoryRequest = new AddCategoryRequest("Travelling", "thispictureUrl",
         "This category is for the traveling expended money", CategoryType.Expense);
 
-    public static EditCategoryRequest editCategoryRequest = new EditCategoryRequest("Travelling", "thispictureUrl",
-    "This category is for the traveling expended money", CategoryType.Expense , 1);
+    public static EditCategoryRequest EditCategoryRequest = new EditCategoryRequest("Travelling", "thispictureUrl",
+        "This category is for the traveling expended money", CategoryType.Expense , 1);
 
-    public static IEnumerable<FluentValidation.Results.ValidationFailure> errorList = new List<FluentValidation.Results.ValidationFailure>();
+    public static IEnumerable<FluentValidation.Results.ValidationFailure> ErrorList = new List<FluentValidation.Results.ValidationFailure>();
+    public static IEnumerable<Category> CategoryList = new List<Category>() { Category };
+    public static IEnumerable<CategoryDto> CategoryDtoList = new List<CategoryDto>() { CategoryDto };
 
-    public static FluentValidation.Results.ValidationResult validationResult = new FluentValidation.Results.ValidationResult();
+    public static FluentValidation.Results.ValidationResult ValidationResult = new FluentValidation.Results.ValidationResult();
 }

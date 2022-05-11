@@ -146,7 +146,7 @@ namespace ProjectVBack.Application.Services
                 throw new AppIGetMoneyCategroyNotFoundException();
 
             if (!categoryToDelete.Users.Contains(actualUser))
-                throw new AppIGetMoneyException();
+                throw new AppIGetMoneyInvalidCategoryException();
 
             if (categoryToDelete.IsDefault)
             {
@@ -157,9 +157,9 @@ namespace ProjectVBack.Application.Services
 
                 _unitOfWork.Complete();
 
-                var categoryDeleted = _mapper.Map<CategoryDto>(categoryToDelete);
+                var categoryDeletedDto = _mapper.Map<CategoryDto>(categoryToDelete);
 
-                return categoryDeleted;
+                return categoryDeletedDto;
             }
 
             else
