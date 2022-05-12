@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Domain.Reposit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVBack.Crosscutting.CustomExceptions", "..\ProjectVBack.Crosscutting.CustomExceptions\ProjectVBack.Crosscutting.CustomExceptions.csproj", "{E27B483D-17AA-476A-BAC7-2CAD588298D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVBack.Testing.IntegrationTesting", "..\ProjectVBack.WebApi.ServicesTests\ProjectVBack.Testing.IntegrationTesting.csproj", "{11F8601B-89AA-475E-BAF7-F0850C7E6DDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{E27B483D-17AA-476A-BAC7-2CAD588298D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E27B483D-17AA-476A-BAC7-2CAD588298D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E27B483D-17AA-476A-BAC7-2CAD588298D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F8601B-89AA-475E-BAF7-F0850C7E6DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F8601B-89AA-475E-BAF7-F0850C7E6DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F8601B-89AA-475E-BAF7-F0850C7E6DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F8601B-89AA-475E-BAF7-F0850C7E6DDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +102,7 @@ Global
 		{362D5580-6A80-403C-AABD-4DB8D9D4B575} = {153CBBF2-77FE-4466-B829-6A85BFC0F54B}
 		{DB86E755-4FD4-4835-AA76-A7AE7FF0585F} = {62E81F23-5857-4B34-BCB6-BAD699C84630}
 		{E27B483D-17AA-476A-BAC7-2CAD588298D2} = {D958DDA5-DFEE-4738-AB15-C069C3033577}
+		{11F8601B-89AA-475E-BAF7-F0850C7E6DDA} = {2CD2B82B-06E8-4985-B814-4478D487692C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {274B9532-7539-48BD-B2F8-FE5EF322C5EC}

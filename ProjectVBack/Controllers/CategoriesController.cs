@@ -103,7 +103,7 @@ namespace ProjectVBack.Controllers
 
         private string GetUserId()
         {
-            var claims = HttpContext.User.Claims;
+            var claims = User.Claims;
 
             if (claims == null || !claims.Any())
                 throw new AppIGetMoneyException(nameof(claims));
