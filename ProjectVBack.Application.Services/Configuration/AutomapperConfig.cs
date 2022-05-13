@@ -16,6 +16,8 @@ namespace ProjectVBack.Application.Services.Configuration
             CreateMap<Transaction, TransactionDto>().ReverseMap();
             CreateMap<Transaction, AddTransactionRequest>().ReverseMap();
             CreateMap<Transaction, EditTransactionRequest>().ReverseMap();
+            CreateMap<User, RegisterRequest>().ReverseMap();
+            CreateMap<UserDto, RegisterRequest>().ReverseMap();
         }
     }
 }
