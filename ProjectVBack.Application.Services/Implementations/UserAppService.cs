@@ -91,9 +91,7 @@ namespace ProjectVBack.Application.Services
             if (!validationResult.IsValid)
             {
                 if (validationResult.Errors.Any())
-                {
                     throw new AppIGetMoneyInvalidUserException(validationResult.Errors[0].ErrorMessage);
-                }
 
                 throw new AppIGetMoneyInvalidUserException();
             }
@@ -119,6 +117,9 @@ namespace ProjectVBack.Application.Services
 
                 return newUserDto;
             }
+
+            if (result.Errors.Any())
+                throw new AppIGetMoneyInvalidUserException(result.Errors.First().Description);
 
             throw new AppIGetMoneyException();
         }
@@ -147,12 +148,12 @@ namespace ProjectVBack.Application.Services
 
             if (!validationResult.IsValid)
             {
-                if(validationResult.Errors.Any())
+                if (validationResult.Errors.Any())
                     throw new AppIGetMoneyInvalidUserException(validationResult.Errors[0].ErrorMessage);
 
                 throw new AppIGetMoneyInvalidUserException();
             }
-                
+
             var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)

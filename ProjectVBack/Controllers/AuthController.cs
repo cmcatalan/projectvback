@@ -29,19 +29,9 @@ namespace ProjectVBack.WebApi.Services.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(RegisterRequest request)
         {
-            try
-            {
-                var newUserDto = await _userAppService.SignUp(request);
-                if (newUserDto == null)
-                    return BadRequest();
+            var newUserDto = await _userAppService.SignUp(request);
 
-                return Ok(newUserDto);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Can't sign up");
-                return BadRequest();
-            }
+            return Ok(newUserDto);
         }
     }
 }
